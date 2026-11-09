@@ -311,6 +311,7 @@ export const en = {
     week: "Every week",
     month: "Every month",
   },
+  needName: "Add a name.",
   needTitle: "Add a title.",
   needAmount: "Enter an amount between 0.01 and 1,000,000.",
   saved: function (n) { return 'Saved ' + n; },

@@ -19,6 +19,8 @@ import { AreaSheet } from './sheets/AreaSheet';
 import { DetailsSheet } from './sheets/DetailsSheet';
 import { ReviewSheet } from './sheets/ReviewSheet';
 import { Tasks } from './screens/Tasks';
+import { Money } from './screens/Money';
+import { BillSheet, PasteSheet, SpendSheet } from './sheets/MoneySheets';
 import { parseAll } from '../logic/parser';
 import type { PlanView } from './app-context';
 import { createStore, type Store } from './store';
@@ -132,7 +134,7 @@ function Shell({ store }: { store: Store }) {
         <div class="phone">
           <canvas ref={canvas} id="waves" aria-hidden="true" />
           <main class="screen">
-            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : <Placeholder tab={tab} />}
+            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : tab === 'money' ? <Money /> : <Placeholder tab={tab} />}
           </main>
           <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
           {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
@@ -149,6 +151,9 @@ function Shell({ store }: { store: Store }) {
 function AddOrEdit({ req, today }: { req: SheetRequest; today: string }) {
   if (req.kind === 'details' && req.id) return <DetailsSheet id={req.id} />;
   if (req.kind === 'review') return <ReviewSheet text={req.text} date={req.date} />;
+  if (req.kind === 'spend') return <SpendSheet categoryId={req.id} />;
+  if (req.kind === 'bill') return <BillSheet id={req.id} ym={req.date} />;
+  if (req.kind === 'paste') return <PasteSheet />;
   if (req.kind !== 'add') return null;
   const text = req.text?.trim() ?? '';
   if (!text) return <DetailsSheet date={req.date} blockId={req.blockId} />;

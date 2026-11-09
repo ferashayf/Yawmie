@@ -311,6 +311,7 @@ export const ar = {
     week: "كل أسبوع",
     month: "كل شهر",
   },
+  needName: "اكتب الاسم.",
   needTitle: "اكتب عنوان.",
   needAmount: "اكتب مبلغ بين 0.01 و 1,000,000.",
   saved: function (n) { return 'تم حفظ ' + n; },
