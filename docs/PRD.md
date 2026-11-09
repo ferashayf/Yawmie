@@ -301,6 +301,6 @@ An iPhone app on **iOS 26**: large titles, rounded grouped lists, round ✕/✓ 
 
 ## 12. Next steps
 
-1. Build plan: [docs/superpowers/plans/2026-11-09-yawmie-v1.md](docs/superpowers/plans/2026-11-09-yawmie-v1.md) (risky parts first).
+1. Build plan: [docs/superpowers/plans/2026-11-09-yawmie-v1.md](superpowers/plans/2026-11-09-yawmie-v1.md) (risky parts first).
 2. Build v1, install on the iPhone and test (section 10), in both ways.
 3. After v1: write `HOW-IT-WORKS.md`, a plain-language guide covering both ways of using the app.

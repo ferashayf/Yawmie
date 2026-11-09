@@ -25,7 +25,7 @@
 
 <p align="center"><img src="docs/images/hero.png" alt="Yawmie on iPhone: Money, Today, and Today in Arabic dark mode" width="100%"></p>
 
-> **Status:** in development. Not ready to use yet.
+> **Status:** v1, the first release. New guide: [How it works](docs/HOW-IT-WORKS.md).
 
 ## What you can do
 
@@ -56,6 +56,8 @@
 | Voice and reminders | Yes | No (Claude blocks them) |
 
 Everyone starts with an empty app. There's no account, no server and no tracking.
+
+Reminders need the free **"Yawmie Reminder"** shortcut, made once on your iPhone: [how to make it](docs/reminder-shortcut.md).
 
 ## Use it in Claude (as an artifact)
 
