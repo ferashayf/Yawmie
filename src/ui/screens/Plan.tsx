@@ -35,7 +35,7 @@ export function Plan() {
     const bAppts = appointmentsInBlock(state, b, day).filter(inArea);
     if (af === 'urgent' && !inside.length) continue;
     [...inside, ...bAppts].forEach((x) => used.add(x.id));
-    entries.push({ t: b.start, node: <BlockCard b={b} list={[...bAppts, ...inside].sort((x, y) => (x.time ?? '99').localeCompare(y.time ?? '99'))} /> });
+    entries.push({ t: b.start, node: blockCard(b, [...bAppts, ...inside].sort((x, y) => (x.time ?? '99').localeCompare(y.time ?? '99'))) });
   }
   for (const a of appts.filter((x) => !used.has(x.id))) entries.push({ t: a.time ?? '00:00', node: <div class="glass group tl-appt"><ItemRow it={a} /></div> });
   if (day === today) entries.push({ t: now, now: true });
@@ -57,8 +57,8 @@ export function Plan() {
         start={<button class="addbtn tadd" onClick={() => open({ kind: 'add', text: '', date: day })}><Icon name="plusSm" />{t.addBtn}</button>} />
       <section class="section plan">
         {day !== today && <div class="backrow"><button class="count" onClick={() => setPlan({ day: today, week: 0 })}>{t.backToday}</button></div>}
-        <WeekStrip />
-        <AreaChips />
+        {WeekStrip()}
+        {AreaChips()}
         <div class="tl">
           {entries.map((e) =>
             e.now ? (hasContent && <div class="slot now"><span class="tm num">{fmtTime(e.t, lang)}</span><span class="nowline" aria-label={t.nowLbl} /></div>)
@@ -81,7 +81,7 @@ export function Plan() {
     </>
   );
 
-  function BlockCard({ b, list }: { b: Block; list: Item[] }) {
+  function blockCard(b: Block, list: Item[]) {
     const a = findArea(state.areas, b.areaId);
     const status = day < today ? 'ended' : day > today ? 'upcoming' : blockStatus(b, now);
     const tasks = list.filter((x) => x.kind === 'task').length;

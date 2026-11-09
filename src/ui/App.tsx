@@ -16,6 +16,10 @@ import { Plan } from './screens/Plan';
 import { BlockPage } from './screens/BlockPage';
 import { Focus } from './Focus';
 import { AreaSheet } from './sheets/AreaSheet';
+import { DetailsSheet } from './sheets/DetailsSheet';
+import { ReviewSheet } from './sheets/ReviewSheet';
+import { Tasks } from './screens/Tasks';
+import { parseAll } from '../logic/parser';
 import type { PlanView } from './app-context';
 import { createStore, type Store } from './store';
 import { Toast } from './Toast';
@@ -128,14 +132,27 @@ function Shell({ store }: { store: Store }) {
         <div class="phone">
           <canvas ref={canvas} id="waves" aria-hidden="true" />
           <main class="screen">
-            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : <Placeholder tab={tab} />}
+            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : <Placeholder tab={tab} />}
           </main>
           <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
           {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
           {sheet?.kind === 'area' && <AreaSheet />}
+          {sheet && <AddOrEdit req={sheet} today={clock.today} />}
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
       </div>
     </AppContext.Provider>
   );
+}
+
+// Add (quick add, Add buttons, block page) and details: one task/appointment → the details page; money or several lines → the review list.
+function AddOrEdit({ req, today }: { req: SheetRequest; today: string }) {
+  if (req.kind === 'details' && req.id) return <DetailsSheet id={req.id} />;
+  if (req.kind === 'review') return <ReviewSheet text={req.text} date={req.date} />;
+  if (req.kind !== 'add') return null;
+  const text = req.text?.trim() ?? '';
+  if (!text) return <DetailsSheet date={req.date} blockId={req.blockId} />;
+  const drafts = parseAll(text, today, req.date && req.date !== today ? req.date : undefined);
+  const one = drafts.length === 1 && drafts[0].kind !== 'expense' && drafts[0].kind !== 'bill';
+  return one ? <DetailsSheet draft={drafts[0]} date={req.date} blockId={req.blockId} /> : <ReviewSheet text={text} date={req.date} />;
 }
