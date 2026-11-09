@@ -16,8 +16,8 @@ concurrency:
 
 jobs:
   deploy:
-    # Only the public repo publishes; the private backup repo just stores the code.
-    if: github.repository == 'ferashayf/Yawmie'
+    # Only the public repo publishes, and only once it is public; the private backup repo just stores the code.
+    if: github.repository == 'ferashayf/Yawmie' && !github.event.repository.private
     runs-on: ubuntu-latest
     environment:
       name: github-pages

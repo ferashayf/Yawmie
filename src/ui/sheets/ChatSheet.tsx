@@ -9,14 +9,12 @@ import type { Draft } from '../../model/types';
 import { validateDraft } from '../../model/validate';
 import { useApp } from '../app-context';
 import { Icon } from '../Icon';
-import { findCategory, nameOf } from '../labels';
+import { esc, findCategory, nameOf } from '../labels';
 
 const INPUT_MAX = 200;
 const WAVE = [8, 14, 22, 12, 26, 18, 10, 20, 24, 12, 16, 8];
 const STEP_MS = 70;
 
-// User text goes in escaped; our own text formulas add the <b> marks.
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 const Html = ({ html }: { html: string }) => <span dangerouslySetInnerHTML={{ __html: html }} />;
 
 export interface ChatMsg { from: 'me' | 'bot'; text?: string; parts?: ChatPart[]; asked?: string; added?: boolean }

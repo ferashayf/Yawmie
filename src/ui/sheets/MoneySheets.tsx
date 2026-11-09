@@ -9,7 +9,7 @@ import type { YM } from '../../model/types';
 import { billReminder, reminderLink } from '../../integrations/reminder';
 import { useApp } from '../app-context';
 import { Icon } from '../Icon';
-import { nameOf } from '../labels';
+import { esc, nameOf } from '../labels';
 import { SheetShell } from './DetailsSheet';
 
 const HALALAS = 100;
@@ -179,7 +179,7 @@ export function PasteSheet() {
               )}
               {bill && f.on && (
                 <div class="match">
-                  <span>{t.billMatch(bill.name, new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-nu-latn-ca-gregory' : 'en-US', { month: 'long' }).format(new Date(Number(f.date.slice(0, 4)), Number(f.date.slice(5, 7)) - 1, 1)))}</span>
+                  <span dangerouslySetInnerHTML={{ __html: t.billMatch(esc(bill.name), new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-nu-latn-ca-gregory' : 'en-US', { month: 'long' }).format(new Date(Number(f.date.slice(0, 4)), Number(f.date.slice(5, 7)) - 1, 1))) }} />
                   <button class={`switch${f.payBill ? ' on' : ''}`} role="switch" aria-checked={!!f.payBill} aria-label={bill.name} onClick={() => patch(i, { payBill: !f.payBill })} />
                 </div>
               )}

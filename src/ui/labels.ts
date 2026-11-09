@@ -29,3 +29,6 @@ export function dueText(due: YMD, today: YMD, t: Strings, lang: Lang): string {
   if (n < 0) return t.late(-n);
   return t.rel(n) || fmtDate(due, lang, { weekday: 'short', day: 'numeric' });
 }
+
+// User text goes in escaped before one of our bold-marked text formulas renders it as HTML.
+export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
