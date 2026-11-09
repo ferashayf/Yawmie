@@ -7,6 +7,7 @@ import { newId } from '../../model/empty';
 import type { Alert, Draft, Item, Recurrence, Weekday, YMD } from '../../model/types';
 import { safeUrl } from '../../model/validate';
 import type { ComponentChildren } from 'preact';
+import { itemReminder, reminderLink } from '../../integrations/reminder';
 import { useApp } from '../app-context';
 import type { IconName } from '../icons';
 import { Icon } from '../Icon';
@@ -47,7 +48,7 @@ const fillFrom = (f: Form, p: Draft): Form => ({
 
 // Details page for a new or existing task/appointment, with its repeat page (PRD D1–D7).
 export function DetailsSheet({ id, draft, date, blockId }: { id?: string; draft?: Draft; date?: YMD; blockId?: string }) {
-  const { state, today, t, update, close } = useApp();
+  const { state, today, t, features, update, close } = useApp();
   const lang = state.settings.lang;
   const existing = id ? state.items.find((x) => x.id === id) : undefined;
   const blank: Form = {
@@ -86,9 +87,13 @@ export function DetailsSheet({ id, draft, date, blockId }: { id?: string; draft?
       planDays: appt ? [] : f.planDays, blockId: !appt ? f.blockId : undefined,
     };
     const toast = { text: data.alert !== 'none' ? t.alertSaved : t.saved(1) };
-    if (existing) update((s) => ({ ...s, items: s.items.map((x) => (x.id === existing.id ? { ...x, ...data } : x)) }), toast);
-    else update((s) => ({ ...s, items: [...s.items, { ...data, id: newId(), status: 'open' }] }), toast);
+    const saved: Item = existing ? { ...existing, ...data } : { ...data, id: newId(), status: 'open' };
+    if (existing) update((s) => ({ ...s, items: s.items.map((x) => (x.id === existing.id ? saved : x)) }), toast);
+    else update((s) => ({ ...s, items: [...s.items, saved] }), toast);
     close();
+    // The alert goes to Apple Reminders through the shortcut (website app only).
+    const reminder = features.reminders ? itemReminder(saved, today) : null;
+    if (reminder) window.location.href = reminderLink(reminder);
   };
 
   const remove = () => {
@@ -131,12 +136,12 @@ export function DetailsSheet({ id, draft, date, blockId }: { id?: string; draft?
               <Switch on={f.hasTime} label={t.time} onToggle={() => set({ hasTime: !f.hasTime })} />
             </Row>
             {f.hasTime && <div class="dsub"><input type="time" value={f.time} aria-label={t.time} onChange={(e) => e.currentTarget.value && set({ time: e.currentTarget.value })} /></div>}
-            <Row icon="bell" label={t.alertLbl} tile="#D08A2E">
+            {features.reminders && <Row icon="bell" label={t.alertLbl} tile="#D08A2E">
               <select class="dselect" aria-label={t.alertLbl} value={f.alert} onChange={(e) => set({ alert: e.currentTarget.value as Alert })}>
                 {Object.entries(t.alerts as Record<string, string>).map(([k, v]) => <option value={k}>{v}</option>)}
               </select>
-            </Row>
-            {f.alert !== 'none' && !f.hasTime && <div class="dhint">{t.alertNoTime}</div>}
+            </Row>}
+            {features.reminders && f.alert !== 'none' && !f.hasTime && <div class="dhint">{t.alertNoTime}</div>}
             <button class="drow dbtn" onClick={() => { setErr(''); setSub('repeat'); }}>
               <span class="dicon" style={{ '--tile': '#7A8B3D' }}><Icon name="repeat" /></span>
               <span class="dlabel">{t.repeatLbl}</span>

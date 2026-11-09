@@ -6,6 +6,7 @@ import { isDuplicate, matchBill } from '../../logic/matchBill';
 import { savePasted, toggleSkip, type PastedLine } from '../../logic/money-edits';
 import { newId } from '../../model/empty';
 import type { YM } from '../../model/types';
+import { billReminder, reminderLink } from '../../integrations/reminder';
 import { useApp } from '../app-context';
 import { Icon } from '../Icon';
 import { nameOf } from '../labels';
@@ -48,7 +49,7 @@ export function SpendSheet({ categoryId }: { categoryId?: string }) {
 
 // Add or edit a bill: name, amount, category, due day from a 1–31 grid; editing adds Remind me, Skip, Delete (PRD M9).
 export function BillSheet({ id, ym }: { id?: string; ym?: YM }) {
-  const { state, today, t, features, update, close, open } = useApp();
+  const { state, today, t, features, update, close } = useApp();
   const lang = state.settings.lang;
   const month = ym ?? monthOf(today);
   const b = id ? state.bills.find((x) => x.id === id) : undefined;
@@ -92,7 +93,7 @@ export function BillSheet({ id, ym }: { id?: string; ym?: YM }) {
       {b && (
         <>
           <div class="dgroup">
-            {features.reminders && <button class="drow dbtn" onClick={() => open({ kind: 'remind', id: b.id })}><Icon name="bell" /> {t.remindMe}</button>}
+            {features.reminders && <button class="drow dbtn" onClick={() => { window.location.href = reminderLink(billReminder(b, today)); }}><Icon name="bell" /> {t.remindMe}</button>}
             {!paid && <button class="drow dbtn" onClick={() => update((s) => toggleSkip(s, b.id, month))}>{skipped ? t.unskip : t.skip}</button>}
             <button class="drow dbtn danger" onClick={() => setConfirm(!confirm)}>{t.delBill}</button>
           </div>
