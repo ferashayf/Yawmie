@@ -21,6 +21,8 @@ import { ReviewSheet } from './sheets/ReviewSheet';
 import { Tasks } from './screens/Tasks';
 import { Money } from './screens/Money';
 import { BillSheet, PasteSheet, SpendSheet } from './sheets/MoneySheets';
+import { ChatSheet, type ChatMsg } from './sheets/ChatSheet';
+import { Bubble } from './Bubble';
 import { parseAll } from '../logic/parser';
 import type { PlanView } from './app-context';
 import { createStore, type Store } from './store';
@@ -63,6 +65,8 @@ function Shell({ store }: { store: Store }) {
   const [tab, setTab] = useState<Tab>('today');
   const [sheet, setSheet] = useState<SheetRequest | null>(null);
   const [page, setPage] = useState<SheetRequest | null>(null); // the block page, under any sheet
+  const [chat, setChat] = useState<ChatMsg[]>([]);
+  const [bubble, setBubble] = useState(true);
   const [plan, setPlanView] = useState<PlanView>({ day: '', week: 0, area: 'all', editing: false });
   const [toast, setToast] = useState<ToastState>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -140,6 +144,8 @@ function Shell({ store }: { store: Store }) {
           {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
           {sheet?.kind === 'area' && <AreaSheet />}
           {sheet && <AddOrEdit req={sheet} today={clock.today} />}
+          {sheet?.kind === 'chat' && <ChatSheet log={chat} setLog={setChat} />}
+          {bubble && !sheet && !page && <Bubble onClose={() => setBubble(false)} />}
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
       </div>
