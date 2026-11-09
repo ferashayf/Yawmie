@@ -22,6 +22,8 @@ import { Money } from './screens/Money';
 import { BillSheet, PasteSheet, SpendSheet } from './sheets/MoneySheets';
 import { ChatSheet, type ChatMsg } from './sheets/ChatSheet';
 import { Bubble } from './Bubble';
+import { Setup } from './Setup';
+import { Tour, TourAsk } from './Tour';
 import { Settings } from './screens/Settings';
 import { ExportRunner, ImportSheet, StepsSheet } from './sheets/SettingsSheets';
 import { parseAll } from '../logic/parser';
@@ -69,6 +71,8 @@ function Shell({ store }: { store: Store }) {
   const [chat, setChat] = useState<ChatMsg[]>([]);
   const [bubble, setBubble] = useState(true);
   const [incoming, setIncoming] = useState<AppState | null>(null);
+  const [setupStep, setSetupStep] = useState(1);
+  const [tip, setTip] = useState(0);
   const [plan, setPlanView] = useState<PlanView>({ day: '', week: 0, area: 'all', editing: false });
   const [toast, setToast] = useState<ToastState>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -119,6 +123,10 @@ function Shell({ store }: { store: Store }) {
       },
       sheet,
       open(req) {
+        if (req.kind === 'tour') {
+          setSheet(null);
+          return setTip(1);
+        }
         if (req.kind !== 'block') return setSheet(req);
         setPage(req);
         setSheet(null);
@@ -133,6 +141,8 @@ function Shell({ store }: { store: Store }) {
     [state, clock, tab, t, sheet, page, plan],
   );
 
+  const done = () => store.update((s) => ({ ...s, settings: { ...s.settings, tourDone: true } }));
+
   if (!clock.today) return null;
   return (
     <AppContext.Provider value={app}>
@@ -143,6 +153,13 @@ function Shell({ store }: { store: Store }) {
             {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : tab === 'money' ? <Money /> : tab === 'settings' ? <Settings onImport={(s) => { setIncoming(s); setSheet({ kind: 'import' }); }} /> : null}
           </main>
           <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
+          {(!state.settings.setupDone || sheet?.kind === 'setup') && !page && (
+            <Setup step={setupStep} setStep={setSetupStep} onFinish={() => {
+              setSetupStep(1);
+              if (sheet?.kind === 'setup') setSheet(null);
+              store.update((s) => ({ ...s, settings: { ...s.settings, setupDone: true } }));
+            }} />
+          )}
           {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
           {sheet?.kind === 'area' && <AreaSheet />}
           {sheet && <AddOrEdit req={sheet} today={clock.today} />}
@@ -150,7 +167,11 @@ function Shell({ store }: { store: Store }) {
           {sheet?.kind === 'steps' && <StepsSheet />}
           {sheet?.kind === 'export' && <ExportRunner />}
           {sheet?.kind === 'import' && incoming && <ImportSheet incoming={incoming} />}
-          {bubble && !sheet && !page && <Bubble onClose={() => setBubble(false)} />}
+          {bubble && !sheet && !page && state.settings.setupDone && !tip && <Bubble onClose={() => setBubble(false)} />}
+          {state.settings.setupDone && !state.settings.tourDone && !sheet && !page && !tip && (
+            <TourAsk onGo={() => { done(); setTip(1); }} onSkip={done} />
+          )}
+          {tip > 0 && <Tour n={tip} setN={setTip} />}
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
       </div>
