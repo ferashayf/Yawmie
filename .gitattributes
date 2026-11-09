@@ -1,0 +1,3 @@
+# GitHub's language bar: count the app's code, not design mockups or third-party files.
+design/** linguist-documentation
+apps/site/vendor/** linguist-vendored
