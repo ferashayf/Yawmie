@@ -46,4 +46,4 @@ npm run build:artifact   # Claude artifact → dist-artifact/index.html
 
 ## License
 
-Code: [MIT](LICENSE). The name Yawmie / يومي, the character, the logo, the icon and all artwork are **all rights reserved**: see [TRADEMARKS.md](TRADEMARKS.md). Forks use their own name and art.
+Code: [MIT](LICENSE). The name Yawmie / يومي, the character, the logo, the icon and all artwork are **all rights reserved**: see [TRADEMARKS.md](TRADEMARKS.md). Forks use their own name and art. Third-party files in `site/vendor/` (GSAP) keep their own license, noted at the top of each file.
