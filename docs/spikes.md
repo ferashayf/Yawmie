@@ -15,7 +15,7 @@ Test artifact for spike 3: https://claude.ai/artifact/RbvRgzGXrQifk3NvRafWgx (pr
 | Home Screen icon: `persist()` / `persisted()` | **true** / false on the first open from the icon; **true / true** after closing and reopening |
 | Icon sees Safari's data? | **No.** Safari had 12, the icon started at 0: separate storage, as expected |
 | Data after closing the app and restarting the phone | **Kept** (counter 2 → 2) |
-| Data after 3 days (2026-11-12) | pending |
+| Data after 3 days | **On hold**: the test page is offline since `yawmie-spike` went private. Check later (make it public again) or skip: `persisted()` is true and data survived a restart |
 
 **Decision:** keep the plan. Home Screen apps get protected storage; Safari tabs don't (so the Safari card U3 matters). `persisted()` can still say false on the very first open, right after `persist()` said true, so Settings → Data protection shows "Protected" when **either** `persist()` answered true this session **or** `persisted()` is true.
 

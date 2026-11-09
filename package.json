@@ -1,0 +1,28 @@
+{
+  "name": "yawmie",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:artifact": "tsc --noEmit && vite build --mode artifact",
+    "preview": "vite preview",
+    "test": "vitest run && node --test 'scripts/*.test.mjs'",
+    "check:privacy": "node scripts/check-privacy.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
+  },
+  "dependencies": {
+    "idb-keyval": "^6.3.0",
+    "preact": "^11.2.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.7",
+    "vite-plugin-pwa": "^2.0.0",
+    "vite-plugin-singlefile": "^2.3.4",
+    "vitest": "^5.1.0"
+  }
+}

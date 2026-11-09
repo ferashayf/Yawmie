@@ -124,7 +124,9 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 ## Commands
 
 - Privacy check: `node scripts/check-privacy.mjs` (runs before every push via `.githooks/pre-push`; its tests: `node --test 'scripts/*.test.mjs'`). Private words go in the git-ignored `.privacy-words`.
-- `dev`, `build`, `build:artifact`, `test`: added with the scaffold (Task 5).
+- `npm run dev` (website app, localhost) · `npx vite --mode artifact` (artifact mode, local fake storage)
+- `npm run build` → `dist/` (website) · `npm run build:artifact` → `dist-artifact/index.html` (one file)
+- `npm test` (Vitest for `src/`, then the privacy-check tests)
 
 ## Skills to prefer
 
