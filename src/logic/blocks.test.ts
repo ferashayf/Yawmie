@@ -88,3 +88,24 @@ describe('delete rules', () => {
     expect(s.budgets.map((b) => b.id)).toEqual(['g0']);
   });
 });
+
+describe('move in and out of a block', () => {
+  it('a to-do becomes a task on that day', async () => {
+    const { moveIntoBlock } = await import('./edits');
+    const todo = item({ kind: 'todo', dueDate: undefined });
+    const s = moveIntoBlock(stateWith([todo]), todo.id, 'b1', '2026-11-10', TODAY);
+    expect(s.items[0]).toMatchObject({ kind: 'task', dueDate: '2026-11-10', blockId: 'b1' });
+  });
+
+  it('a task due another day gets the day as a plan day (once)', async () => {
+    const { moveIntoBlock } = await import('./edits');
+    const t = item({ dueDate: '2026-11-20', planDays: ['2026-11-10'] });
+    const s = moveIntoBlock(stateWith([t]), t.id, 'b1', '2026-11-10', TODAY);
+    expect(s.items[0]).toMatchObject({ blockId: 'b1', planDays: ['2026-11-10'], dueDate: '2026-11-20' });
+  });
+
+  it('takeOutOfBlock clears blockId', async () => {
+    const { takeOutOfBlock } = await import('./edits');
+    expect(takeOutOfBlock(stateWith([item({ blockId: 'b1' })]), `i${n}`).items[0].blockId).toBeUndefined();
+  });
+});

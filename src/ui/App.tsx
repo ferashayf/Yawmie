@@ -12,6 +12,11 @@ import { startClock, type Clock } from './clock';
 import { Dock } from './Dock';
 import { Placeholder } from './screens/Placeholder';
 import { Today } from './screens/Today';
+import { Plan } from './screens/Plan';
+import { BlockPage } from './screens/BlockPage';
+import { Focus } from './Focus';
+import { AreaSheet } from './sheets/AreaSheet';
+import type { PlanView } from './app-context';
 import { createStore, type Store } from './store';
 import { Toast } from './Toast';
 import { drawWaves } from './waves';
@@ -51,6 +56,8 @@ function Shell({ store }: { store: Store }) {
   const [clock, setClock] = useState<Clock>({ today: '', now: '' });
   const [tab, setTab] = useState<Tab>('today');
   const [sheet, setSheet] = useState<SheetRequest | null>(null);
+  const [page, setPage] = useState<SheetRequest | null>(null); // the block page, under any sheet
+  const [plan, setPlanView] = useState<PlanView>({ day: '', week: 0, area: 'all', editing: false });
   const [toast, setToast] = useState<ToastState>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -88,20 +95,30 @@ function Shell({ store }: { store: Store }) {
       features,
       t,
       tab,
-      go: setTab,
+      go: (next) => {
+        setTab(next);
+        setSheet(null);
+        setPage(null);
+      },
       update(fn, note) {
         const before = store.get();
         store.update(fn);
         if (note) showToast({ text: note.text, undo: note.undo ? () => { store.update(() => before); setToast(null); } : undefined });
       },
       sheet,
-      open: setSheet,
-      close: () => setSheet(null),
+      open(req) {
+        if (req.kind !== 'block') return setSheet(req);
+        setPage(req);
+        setSheet(null);
+      },
+      close: () => (sheet ? setSheet(null) : setPage(null)),
+      plan,
+      setPlan: (patch) => setPlanView((p) => ({ ...p, ...patch })),
       finish(id) {
         app.update((s) => ({ ...s, items: s.items.map((x) => (x.id === id ? finishItem(x, clock.today) : x)) }), { text: t.done, undo: true });
       },
     }),
-    [state, clock, tab, t, sheet],
+    [state, clock, tab, t, sheet, page, plan],
   );
 
   if (!clock.today) return null;
@@ -110,8 +127,12 @@ function Shell({ store }: { store: Store }) {
       <div class="stage">
         <div class="phone">
           <canvas ref={canvas} id="waves" aria-hidden="true" />
-          <main class="screen">{tab === 'today' ? <Today /> : <Placeholder tab={tab} />}</main>
+          <main class="screen">
+            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : <Placeholder tab={tab} />}
+          </main>
           <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
+          {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
+          {sheet?.kind === 'area' && <AreaSheet />}
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
       </div>

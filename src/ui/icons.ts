@@ -41,3 +41,19 @@ export const I = {
 } as const;
 
 export type IconName = keyof typeof I;
+
+// Area icons (inner SVG paths, drawn at any size). Copied from design/demo.html.
+export const AREA_ICON_PATHS = {
+  brief: "<rect x=\"3.5\" y=\"7\" width=\"17\" height=\"12.5\" rx=\"3\"/><path d=\"M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17\"/>",
+  rocket: "<path d=\"M12 15l-3-3c1.5-5 5-8 10-8 0 5-3 8.5-8 10z\"/><path d=\"M9 12H5l2-4h4M12 15v4l4-2v-4\"/>",
+  home: "<path d=\"M4 11l8-7 8 7v9.5H4z\"/><path d=\"M10 20.5V14.5h4v6\"/>",
+  book: "<path d=\"M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z\"/><path d=\"M4 20.5A2.5 2.5 0 0 0 6.5 23H20\"/>",
+  heart: "<path d=\"M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z\"/>",
+  gym: "<path d=\"M3 9.5v5M6 7v10M18 7v10M21 9.5v5M6 12h12\"/>",
+  cart: "<path d=\"M3 4h2.5l2.2 10.5h10.6L20.5 7H7\"/><circle cx=\"9.5\" cy=\"19\" r=\"1.4\"/><circle cx=\"17\" cy=\"19\" r=\"1.4\"/>",
+  star: "<path d=\"M12 3.5l2.3 5.3 5.7.5-4.3 3.8 1.3 5.6-5-3-5 3 1.3-5.6L4 9.3l5.7-.5z\"/>",
+  code: "<path d=\"M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14\"/>",
+  pen: "<path d=\"M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z\"/><path d=\"M13.5 6.5l4 4\"/>",
+  music: "<path d=\"M9 18V5.5l11-2V16\"/><circle cx=\"6.5\" cy=\"18\" r=\"2.5\"/><circle cx=\"17.5\" cy=\"16\" r=\"2.5\"/>",
+  leaf: "<path d=\"M5 19c0-8 5-13.5 15-14-0.5 10-6 15-14 15\"/><path d=\"M5 19l7-7\"/>",
+} as const;

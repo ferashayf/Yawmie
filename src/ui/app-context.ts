@@ -22,9 +22,14 @@ export interface App {
   close(): void;
   // Finish a task/appointment: recurring ones move to their next date. Shows Undo.
   finish(id: string): void;
+  plan: PlanView;
+  setPlan(patch: Partial<PlanView>): void;
 }
 
-export type SheetRequest = { kind: string; id?: string; text?: string; date?: string };
+export type SheetRequest = { kind: string; id?: string; text?: string; date?: string; blockId?: string };
+
+// What Plan is showing; kept while moving between tabs and the block page.
+export interface PlanView { day: string; week: number; area: string; editing: boolean }
 
 export const AppContext = createContext<App | null>(null);
 

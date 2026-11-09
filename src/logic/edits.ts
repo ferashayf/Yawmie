@@ -35,3 +35,20 @@ export function removeCategory(s: AppState, id: string): AppState {
     budgets: s.budgets.filter((g) => g.categoryId !== id),
   };
 }
+
+// Block page "Move in": a to-do becomes a task on that day; a task due another day gets it as a plan day.
+export function moveIntoBlock(s: AppState, itemId: string, blockId: string, day: string, today: string): AppState {
+  return {
+    ...s,
+    items: s.items.map((it) => {
+      if (it.id !== itemId) return it;
+      if (it.kind === 'todo') return { ...it, kind: 'task', dueDate: day, blockId };
+      const due = it.dueDate === day && !(it.dueDate < today);
+      return { ...it, blockId, planDays: due ? it.planDays : [...it.planDays.filter((d) => d !== day), day] };
+    }),
+  };
+}
+
+export function takeOutOfBlock(s: AppState, itemId: string): AppState {
+  return { ...s, items: s.items.map((it) => (it.id === itemId ? { ...it, blockId: undefined } : it)) };
+}
