@@ -1,9 +1,6 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="brand/logo/yawmie-lockup-light-text.png">
-    <img src="brand/logo/yawmie-lockup-dark-text.png" alt="Yawmie · يومي" width="300">
-  </picture>
-</p>
+<p align="center"><img src="apps/app/public/icons/icon-512.png" alt="Yawmie icon" width="96"></p>
+
+<h1 align="center">Yawmie · يومي</h1>
 
 <h3 align="center">Your day and your money, in one calm place.</h3>
 
@@ -97,4 +94,4 @@ npm run build:artifact   # Claude artifact → dist-artifact/index.html
 
 ## License
 
-Code: [MIT](LICENSE). The name Yawmie / يومي, the character, the logo, the icon and all artwork, screenshots included, are **all rights reserved**: see [docs/TRADEMARKS.md](docs/TRADEMARKS.md). Forks use their own name and art. Third-party files in `apps/site/vendor/` (GSAP) keep their own license, noted at the top of each file.
+[MIT](LICENSE). Third-party files in `apps/site/vendor/` (GSAP) keep their own license, noted at the top of each file.

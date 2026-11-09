@@ -1,4 +1,4 @@
-import buddy from '../../../../brand/buddy.png';
+import buddy from '../assets/buddy.png';
 import { isOverdue } from '../logic/today';
 import { useApp, type Tab } from './app-context';
 import { Icon } from './Icon';

@@ -1,11 +1,8 @@
 <div dir="rtl">
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="../brand/logo/yawmie-lockup-light-text.png">
-    <img src="../brand/logo/yawmie-lockup-dark-text.png" alt="Yawmie · يومي" width="300">
-  </picture>
-</p>
+<p align="center"><img src="../apps/app/public/icons/icon-512.png" alt="أيقونة يومي" width="96"></p>
+
+<h1 align="center">يومي · Yawmie</h1>
 
 <h3 align="center">يومك وفلوسك، في مكان واحد هادئ.</h3>
 
@@ -89,6 +86,6 @@
 
 ## الترخيص
 
-الكود: [MIT](../LICENSE). أما اسم Yawmie / يومي، وشخصية «يومي»، والشعار، والأيقونة، وكل الرسومات واللقطات: **جميع الحقوق محفوظة**. التفاصيل في [TRADEMARKS.md](TRADEMARKS.md). النسخ المشتقة تستخدم اسمها ورسوماتها الخاصة.
+[MIT](../LICENSE).
 
 </div>

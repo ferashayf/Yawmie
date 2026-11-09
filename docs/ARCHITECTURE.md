@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — Yawmie / يومي
 
-How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [design/demo.html](../design/demo.html). Open source (MIT) except the brand ([TRADEMARKS.md](TRADEMARKS.md)).
+How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [design/demo.html](../design/demo.html). Open source (MIT).
 
 ## 1. The big picture
 
@@ -165,7 +165,7 @@ interface StorageAdapter {
 
 ## 8. Design system
 
-Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only shades, type ramp, corner scale, 44px tap areas). CSS variables with light and dark values; light = glass, dark = solid cards. The Home Screen icon is the day-arc mark with the two dots of ي. The app uses the iPhone's rounded system font, so no font files are bundled. Artwork (logo, icon, the character) comes from `brand/`.
+Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only shades, type ramp, corner scale, 44px tap areas). CSS variables with light and dark values; light = glass, dark = solid cards. The Home Screen icon is the day-arc mark with the two dots of ي. The app uses the iPhone's rounded system font, so no font files are bundled. The pictures the app uses (Yawmie's character, the icons) live in the app: `apps/app/src/assets/` and `apps/app/public/icons/`.
 
 ## 9. iPhone integration
 
@@ -179,7 +179,7 @@ Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only
 - Website build: strict Content-Security-Policy (`default-src 'self'`). The artifact build runs inside Claude's sandbox. User text is shown with `textContent` (or escaped by the framework), never raw HTML.
 - Typed text, pasted messages, imported backups and Shortcut text are validated; Shortcut text is URL-encoded.
 - Bank messages: card digits and message text are never stored.
-- **Licenses**: code under MIT (`LICENSE`). The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved": kept in `brand/` with `brand/NOTICE.md`, explained in `docs/TRADEMARKS.md`. Forks use their own name, character and logo.
+- **License**: MIT for the whole repo (`LICENSE`). Third-party files in `apps/site/vendor/` keep their own license.
 - **No personal data in the repo.** No sample data folder; made-up data only in tests and the demo. Backups, exports and `.env` are git-ignored. `tooling/scripts/check-privacy.mjs` (run by the `pre-push` hook and in CI) blocks phone numbers, email addresses (except `@example.com` and GitHub/Anthropic `noreply` addresses), card-like numbers, IBANs, and the words in the git-ignored `.privacy-words` file (the owner's real shops and names). Commits use the GitHub `noreply` email.
 
 ### Repo layout
@@ -188,9 +188,8 @@ Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only
 .github/        the deploy workflow
 apps/app/       the Yawmie app: src/ (model/ logic/ storage/ integrations/ i18n/ ui/ mode.ts main.tsx), public/ (icons), index.html, vite.config.ts, tsconfig.json
 apps/site/      the landing page at yawmie.me (vendor/ = third-party GSAP, its own license)
-brand/          NOTICE.md, logo, app icon, the character (all rights reserved)
 design/         demo.html, brandkit.html, concepts/ (made-up data only)
-docs/           PRD.md, ARCHITECTURE.md, TRADEMARKS.md, README.ar.md, images/, spikes.md, superpowers/plans/
+docs/           PRD.md, ARCHITECTURE.md, README.ar.md, images/, spikes.md, superpowers/plans/
 tooling/        scripts/ (check-privacy.mjs, assemble-site.sh), githooks/ (pre-push)
 CLAUDE.md  LICENSE  README.md  package.json  package-lock.json
 ```
@@ -210,7 +209,7 @@ CLAUDE.md  LICENSE  README.md  package.json  package-lock.json
 
 | Topic | Decision |
 |---|---|
-| License | Code MIT, public on GitHub. Brand (name, character, logo, icon, artwork) all rights reserved |
+| License | MIT for everything, public on GitHub |
 | Ways to use it | Website app (data on the phone) or Claude artifact (data in the person's Claude account); one codebase, `StorageAdapter` + `mode` |
 | Starting data | Empty app for everyone; no sample data |
 | Platform | Website app at yawmie.me (GitHub Pages). Native SwiftUI is the fallback |

@@ -63,10 +63,9 @@ The person picks one. Same screens and logic; one **mode** setting decides which
 - Money is in **SAR**, shown as `SAR 1,250.00`, stored as whole halalas.
 - **No sample data.** Everyone gets the real, empty app. Made-up data exists only in tests and the demo.
 
-### 5.3 Open source and brand
+### 5.3 Open source
 
-- The code is **open source under the MIT license**, public on GitHub.
-- The **brand is not MIT**: the name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved", kept in `brand/` with their own notice and `TRADEMARKS.md`. Use the code freely; forks use their own name, character and logo.
+- **Open source under the MIT license**, public on GitHub.
 - README in Arabic and English.
 - **No personal data in the repo, ever.** A pre-push check blocks phone numbers, emails and real shop names.
 
@@ -152,7 +151,7 @@ Priority: **P0** = must have for v1, **P1** = should have, **P2** = later. Every
 
 ### 6.8 Yawmie, the assistant
 
-The character «يومي» ([design/buddy.png](../design/buddy.png); brand artwork, all rights reserved) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
+The character «يومي» ([design/buddy.png](../design/buddy.png)) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
 
 | ID | Requirement |
 |---|---|

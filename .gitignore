@@ -20,3 +20,6 @@ yawmie-backup-*.json
 
 # Assembled site for yawmie.me (built by scripts/assemble-site.sh)
 public-site/
+
+# Brand artwork stays on this Mac only; the app keeps the pictures it uses in apps/app
+brand/

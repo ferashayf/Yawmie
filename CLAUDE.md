@@ -37,12 +37,11 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 6. iPhone integration only through **Apple Shortcuts** (Reminders) and the browser's own APIs. No Apple Pay import, no bank login.
 7. Website app works offline after the first load.
 8. **Logic and screens never touch storage directly:** they use the `StorageAdapter`; screens ask the **mode** which parts to show.
-9. **The brand is not MIT.** The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved", kept in `brand/` with their own notice and `docs/TRADEMARKS.md`. Code is free to use; forks use their own name, character and logo.
 
 ## Decisions
 
 - **Two GitHub repos:** `ferashayf/Yawmie-Private` (git remote `origin`, private backup of all work; push freely) and `ferashayf/Yawmie` (remote `public`, for users; push only with the owner's yes, Task 29).
-- **Open source, MIT** for the code; brand assets reserved (constraint 9). README in Arabic + English (`docs/README.ar.md`), a pre-push check for phone numbers, emails and real shop names.
+- **Open source, MIT** for everything. README in Arabic + English (`docs/README.ar.md`), a pre-push check for phone numbers, emails and real shop names.
 - **No sample data for users.** First open of an empty app: the 7-step setup, then a card "Quick tour? 11 short tips" (Show me / Skip), the spotlight tips, and the empty-state cards.
 - **Addresses:** the landing page (`apps/site/`, built in its own session) is at **https://yawmie.me**; the website app is at **https://yawmie.me/app/** (GitHub Pages, custom domain). Native SwiftUI is the fallback if the web app disappoints.
 - Claude artifact: a single-file HTML build of the same code; data through the artifact `db` capability; data-safety parts, backup card and mic hidden (see the table above).
@@ -136,4 +135,4 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 
 ## Repo layout
 
-`apps/app/` the app · `apps/site/` the landing page · `brand/` · `design/` · `docs/` (PRD, ARCHITECTURE, TRADEMARKS, Arabic README, plan, images) · `tooling/` (scripts, git hooks) · `.github/` (deploy).
+`apps/app/` the app (with the pictures it uses) · `apps/site/` the landing page · `design/` · `docs/` (PRD, ARCHITECTURE, Arabic README, plan, images) · `tooling/` (scripts, git hooks) · `.github/` (deploy).

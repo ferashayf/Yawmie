@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import buddy from '../../../../../brand/buddy.png';
+import buddy from '../../assets/buddy.png';
 import { fmtMoney, fmtTime } from '../../i18n/format';
 import { startListening, type VoiceProblem } from '../../integrations/speech';
 import { brief, reply, type ChatPart } from '../../logic/assistant';
