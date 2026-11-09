@@ -24,7 +24,6 @@ const pwa = VitePWA({
     lang: 'ar',
     dir: 'rtl',
     display: 'standalone',
-    start_url: '/',
     background_color: '#F4F4F2',
     theme_color: '#F4F4F2',
     icons: [
@@ -34,7 +33,8 @@ const pwa = VitePWA({
   },
 });
 
-export default defineConfig(({ mode }) =>
+// The website app lives at yawmie.me/app/ (the landing page is at the root); dev serves at /.
+export default defineConfig(({ mode, command }) =>
   mode === 'artifact'
     ? {
         plugins: [preact(), viteSingleFile()],
@@ -42,5 +42,5 @@ export default defineConfig(({ mode }) =>
         build: { outDir: 'dist-artifact' },
         resolve: { alias: { 'virtual:pwa-register': '/src/ui/pwa-stub.ts' } },
       }
-    : { plugins: [preact(), contentSecurityPolicy(), pwa], test: { include: ['src/**/*.test.{ts,tsx}'] } },
+    : { base: command === 'build' ? '/app/' : '/', plugins: [preact(), contentSecurityPolicy(), pwa], test: { include: ['src/**/*.test.{ts,tsx}'] } },
 );

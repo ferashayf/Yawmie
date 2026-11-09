@@ -128,6 +128,7 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 - `npm run dev` (website app, localhost) · `npx vite --mode artifact` (artifact mode, local fake storage)
 - `npm run build` → `dist/` (website) · `npm run build:artifact` → `dist-artifact/index.html` (one file)
 - `npm test` (Vitest for `src/`, then the privacy-check tests)
+- `sh scripts/assemble-site.sh <folder>` → what yawmie.me serves: `site/` at `/`, the app at `/app/` (the deploy workflow does this)
 
 ## Skills to prefer
 

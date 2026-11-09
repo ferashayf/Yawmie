@@ -17,3 +17,6 @@ yawmie-backup-*.json
 
 # macOS
 .DS_Store
+
+# Assembled site for yawmie.me (built by scripts/assemble-site.sh)
+public-site/

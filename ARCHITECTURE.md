@@ -199,7 +199,7 @@ src/         model/ logic/ storage/ integrations/ i18n/ ui/ mode.ts main.tsx
 ## 11. Build, test, deploy
 
 - **Stack**: Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker, website build only), `idb-keyval` (IndexedDB), `vite-plugin-singlefile` (artifact build only), Vitest.
-- `npm run build` → `dist/` (website app). A GitHub Action runs the tests and the privacy check, then publishes `dist/` to GitHub Pages.
+- `npm run build` → `dist/` (website app, built for `/app/`). `scripts/assemble-site.sh` puts the landing page (`site/`) at the root and `dist/` under `app/`, with `CNAME`. The GitHub Action (`.github/workflows/deploy.yml`, runs only on the public repo) runs the tests and the privacy check, assembles, and publishes to GitHub Pages.
 - `npm run build:artifact` → `dist-artifact/index.html`, one file with everything inlined, published as the Claude artifact.
 - The service worker caches the website app for offline use; an "Update available" button avoids half-updated screens.
 - **Vitest** covers `logic/` (recurrence, overdue sort, block placement, budget math and safe to spend, vs last month, parser, bank messages, bill matching, assistant), `model/` (draft and backup validation, refunds), `storage/` (migrations, both adapters against fakes, chunked save), `integrations/` (Shortcut link), `i18n/` (missing keys, digits) and `scripts/` (privacy check).

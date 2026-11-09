@@ -26,7 +26,15 @@ Everyone starts with an empty app. There's no account, no server and no tracking
 
 How it's built: [ARCHITECTURE.md](ARCHITECTURE.md). What it does: [PRD.md](PRD.md). How to help: [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Run locally: coming with the first code (Vite + TypeScript + Preact).
+Run locally (Node 24):
+
+```bash
+npm install
+npm run dev          # website app at http://localhost:5173
+npm test             # all tests
+npm run build        # website app → dist/
+npm run build:artifact   # Claude artifact → dist-artifact/index.html
+```
 
 ## License
 
