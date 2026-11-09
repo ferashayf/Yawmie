@@ -308,8 +308,11 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 @media (max-width: 860px) { .choose { grid-template-columns: minmax(0, 1fr); } .or { justify-self: center; } }
 
 /* ---------- call to action ---------- */
-.cta { position: relative; margin-top: 90px; border-radius: 38px; background: var(--hero); color: var(--hero-ink); padding: clamp(36px, 6vw, 88px); padding-inline-end: 34%; }
-.cta .peek { position: absolute; height: 118%; bottom: 0; inset-inline-end: 6%; }
+/* Yawmie stands on the panel's bottom edge, beside the heading and buttons. */
+.cta { --pad: clamp(36px, 6vw, 88px); margin-top: 90px; border-radius: 38px; background: var(--hero); color: var(--hero-ink); padding: var(--pad) var(--pad) 0; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr auto; column-gap: 24px; }
+.cta h2 { grid-column: 1; align-self: end; }
+.cta .cta-row { grid-column: 1; margin-bottom: var(--pad); }
+.cta .peek { grid-column: 2; grid-row: 1 / span 2; align-self: end; height: clamp(280px, 34vw, 440px); }
 .cta h2 { margin: 0; font-size: clamp(48px, 9vw, 124px); line-height: .98; letter-spacing: -.05em; font-weight: 800; text-wrap: balance; }
 .steps { list-style: none; padding: 0; margin: 48px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .steps li { padding: 20px; border-radius: 22px; background: color-mix(in srgb, var(--hero-ink) 8%, transparent); display: grid; gap: 8px; }
@@ -319,9 +322,10 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 .cta-row small { color: var(--hero-sub); font-size: 15px; flex-basis: 100%; }
 .btn-gh { background: transparent; color: var(--hero-ink); border: 1px solid color-mix(in srgb, var(--hero-ink) 30%, transparent); }
 .btn-gh:hover { background: color-mix(in srgb, var(--hero-ink) 8%, transparent); }
-@media (max-width: 860px) {
-  .cta { padding-inline-end: clamp(36px, 6vw, 88px); padding-top: 150px; }
-  .cta .peek { height: 250px; bottom: auto; top: -96px; }
+@media (max-width: 600px) {
+  .cta { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .cta .cta-row { margin-bottom: 8px; }
+  .cta .peek { grid-column: 1; grid-row: 3; justify-self: center; height: 260px; }
 }
 @media (max-width: 700px) { .steps { grid-template-columns: minmax(0, 1fr); } }
 

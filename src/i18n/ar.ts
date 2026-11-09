@@ -361,6 +361,7 @@ export const ar = {
   copied: "تم النسخ",
   lastBackup: function (n) { return n === 0 ? 'آخر نسخة: اليوم' : 'آخر نسخة: قبل ' + n + ' يوم'; },
   backupOld: "صار لها أكثر من شهر. صدّر نسخة الحين.",
+  backupNever: "ما فيه نسخة احتياطية بعد · تاخذ 10 ثواني",
   backupT: "وقت النسخة الاحتياطية الشهرية",
   backupP: function (n) { return 'آخر نسخة قبل ' + n + ' يوم · تاخذ 10 ثواني'; },
   backupLater: "لاحقاً",

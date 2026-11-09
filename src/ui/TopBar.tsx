@@ -5,7 +5,7 @@ import { Icon } from './Icon';
 const isDark = (theme: string) => theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
 
 // ☀︎/☾, ع/EN and the gear (✕ on Settings), at the top of every screen.
-function TopButtons() {
+export function TopButtons() {
   const { state, t, tab, go, update } = useApp();
   const dark = isDark(state.settings.theme);
   const setSetting = (patch: Partial<typeof state.settings>) => update((s) => ({ ...s, settings: { ...s.settings, ...patch } }));

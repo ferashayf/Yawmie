@@ -5,11 +5,13 @@ import { emptyState } from '../model/empty';
 import type { AppState } from '../model/types';
 import { openStorage } from '../storage';
 import { requestPersist } from '../storage/persist';
-import { AppContext, type App as AppValue, type Tab } from './app-context';
+import { finishItem } from '../logic/recurrence';
+import { AppContext, type App as AppValue, type SheetRequest, type Tab } from './app-context';
 import { CantSave } from './CantSave';
 import { startClock, type Clock } from './clock';
 import { Dock } from './Dock';
 import { Placeholder } from './screens/Placeholder';
+import { Today } from './screens/Today';
 import { createStore, type Store } from './store';
 import { Toast } from './Toast';
 import { drawWaves } from './waves';
@@ -48,6 +50,7 @@ function Shell({ store }: { store: Store }) {
   const [state, setState] = useState(store.get());
   const [clock, setClock] = useState<Clock>({ today: '', now: '' });
   const [tab, setTab] = useState<Tab>('today');
+  const [sheet, setSheet] = useState<SheetRequest | null>(null);
   const [toast, setToast] = useState<ToastState>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const toastTimer = useRef<number | undefined>(undefined);
@@ -77,7 +80,7 @@ function Shell({ store }: { store: Store }) {
     };
   }, []);
 
-  const app: AppValue = useMemo(
+  const app: AppValue = useMemo<AppValue>(
     () => ({
       state,
       today: clock.today,
@@ -91,8 +94,14 @@ function Shell({ store }: { store: Store }) {
         store.update(fn);
         if (note) showToast({ text: note.text, undo: note.undo ? () => { store.update(() => before); setToast(null); } : undefined });
       },
+      sheet,
+      open: setSheet,
+      close: () => setSheet(null),
+      finish(id) {
+        app.update((s) => ({ ...s, items: s.items.map((x) => (x.id === id ? finishItem(x, clock.today) : x)) }), { text: t.done, undo: true });
+      },
     }),
-    [state, clock, tab, t],
+    [state, clock, tab, t, sheet],
   );
 
   if (!clock.today) return null;
@@ -101,8 +110,8 @@ function Shell({ store }: { store: Store }) {
       <div class="stage">
         <div class="phone">
           <canvas ref={canvas} id="waves" aria-hidden="true" />
-          <main class="screen"><Placeholder tab={tab} /></main>
-          <Dock onBuddy={() => {}} />
+          <main class="screen">{tab === 'today' ? <Today /> : <Placeholder tab={tab} />}</main>
+          <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
       </div>

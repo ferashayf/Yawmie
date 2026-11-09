@@ -361,6 +361,7 @@ export const en = {
   copied: "Copied",
   lastBackup: function (n) { return n === 0 ? 'Last backup: today' : 'Last backup: ' + n + ' days ago'; },
   backupOld: "Over a month old. Export one now.",
+  backupNever: "No backup yet · takes 10 seconds",
   backupT: "Time for your monthly backup",
   backupP: function (n) { return 'Last one ' + n + ' days ago · takes 10 seconds'; },
   backupLater: "Later",

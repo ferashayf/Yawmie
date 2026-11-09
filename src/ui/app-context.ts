@@ -16,7 +16,15 @@ export interface App {
   go(tab: Tab): void;
   // Builds a new state and saves it. With a toast, shows "Saved"/"Deleted" and Undo puts the old state back.
   update(fn: (s: AppState) => AppState, toast?: { text: string; undo?: boolean }): void;
+  // Sheets and full-screen pages (details, add, chat, block, focus, steps, export, …).
+  sheet: SheetRequest | null;
+  open(req: SheetRequest): void;
+  close(): void;
+  // Finish a task/appointment: recurring ones move to their next date. Shows Undo.
+  finish(id: string): void;
 }
+
+export type SheetRequest = { kind: string; id?: string; text?: string; date?: string };
 
 export const AppContext = createContext<App | null>(null);
 
