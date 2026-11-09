@@ -2,8 +2,8 @@
 
 Personal life-management app, **open source (MIT)**, one person per copy, used on the iPhone: tasks, appointments, time blocks, bills, spending, budgets, and a friendly assistant. What it does: [docs/PRD.md](docs/PRD.md). How it's built: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) (read before changing structure). Build plan: [docs/superpowers/plans/2026-11-09-yawmie-v1.md](docs/superpowers/plans/2026-11-09-yawmie-v1.md).
 
-**Status (2026-11-09):** planning, no app code yet. The clickable demo with made-up data is the source of truth for the look and behavior: [design/demo.html](design/demo.html), published at https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA (version 62). The demo's "Try as a new user" button and its made-up data are demo-only.
-**Next:** owner approves the build plan → spikes → repo setup → build v1 → after v1, write `HOW-IT-WORKS.md`, a plain-language user guide for both ways of using it.
+**Status (2026-11-10):** v1 built (all screens, both ways of using it, 196 tests). The clickable demo with made-up data was the source of truth for the look and behavior: https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA (version 62); a local copy lives in `design/`, which is kept out of the repo.
+**Next:** make the public repo public → GitHub Pages + DNS for yawmie.me → publish the artifact build → iPhone test of both ways → `HOW-IT-WORKS.md`.
 
 ## Two ways to use it (one codebase)
 
@@ -33,7 +33,7 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 2. **Website app:** data lives **only on the phone** (IndexedDB). Export/Import of one JSON file is the backup; a monthly reminder keeps it current. **Artifact:** data lives in the person's Claude account, by their choice; no backup reminder.
 3. **Arabic (RTL) + English**, switchable in the app. **Western digits 0-9 everywhere.**
 4. Light + dark mode. Mobile-first (iPhone, iOS 26, Home Screen).
-5. **Public MIT repo: no personal data ever.** No sample data ships to users: everyone gets the real, empty app. Made-up data lives only in tests and the demo. No real names, amounts, shops/brands, phone numbers, emails or keys. A pre-push check enforces it.
+5. **Public MIT repo: no personal data ever.** No sample data ships to users: everyone gets the real, empty app. Made-up data lives only in tests and the demo (local, not in the repo). No real names, amounts, shops/brands, phone numbers, emails or keys. A pre-push check enforces it.
 6. iPhone integration only through **Apple Shortcuts** (Reminders) and the browser's own APIs. No Apple Pay import, no bank login.
 7. Website app works offline after the first load.
 8. **Logic and screens never touch storage directly:** they use the `StorageAdapter`; screens ask the **mode** which parts to show.
@@ -58,7 +58,7 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 
 - Explain in plain language, short steps. The owner is not a full-time developer.
 - A question ("where is X?", "how do I Y?") is not a change request: answer it and offer a fix. Never change an approved layout unasked.
-- Bigger changes: show screens first (concept HTML rendered to PNG in `design/concepts/`), build after a yes. After each demo change: test Arabic + English, light + dark, republish the demo, update the .md files.
+- Bigger changes: show screens first (concept HTML rendered to PNG in the local `design/concepts/`, kept out of the repo), build after a yes. After each demo change: test Arabic + English, light + dark, republish the demo, update the .md files.
 - Keep the .md files describing the app **as it is now**; no change logs in them.
 - Smallest change that fully works. No dependency for a few lines. No feature beyond PRD.md without asking.
 - Match surrounding code. Small files, early returns, named constants.
@@ -78,7 +78,7 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 
 ## Design
 
-Source of truth: [design/demo.html](design/demo.html). Brand = ferashayf.com: warm neutrals + burgundy; teal only inside app screens. Brand kit: [design/brandkit.html](design/brandkit.html). Concept images: [design/concepts/](design/concepts/).
+Source of truth: [the clickable demo](https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA) (local copy: `design/demo.html`, not in the repo). Brand = ferashayf.com: warm neutrals + burgundy; teal only inside app screens. Brand kit and concept images: local `design/` and `brand/` folders, not in the repo.
 
 **Colors**
 - Light: page `#F4F4F2` → `#E8E8E4`, ink `#0E0E0E`, sub `#5A5A5A`, greys `#2A2A2A` `#3A3A3A` `#BDBDBD` `#D6D6D6`, frosted white glass (glass only in light mode).
@@ -135,4 +135,4 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 
 ## Repo layout
 
-`apps/app/` the app (with the pictures it uses) · `apps/site/` the landing page · `design/` · `docs/` (PRD, ARCHITECTURE, Arabic README, plan, images) · `tooling/` (scripts, git hooks) · `.github/` (deploy).
+`apps/app/` the app (with the pictures it uses) · `apps/site/` the landing page · `docs/` (PRD, ARCHITECTURE, Arabic README, plan, images) · `tooling/` (scripts, git hooks) · `.github/` (deploy).

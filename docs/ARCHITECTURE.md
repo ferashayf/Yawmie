@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — Yawmie / يومي
 
-How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [design/demo.html](../design/demo.html). Open source (MIT).
+How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [the clickable demo](https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA). Open source (MIT).
 
 ## 1. The big picture
 
@@ -78,8 +78,8 @@ AppState {
 | `blocks` | which tasks sit in which block on a day, live / ended blocks, "Back from", Focus countdown (h:mm) |
 | `budget` | spent = expenses + bills paid that month; % and level (80% warn, 100% over); **safe to spend** = (budget left − unpaid bills this month) ÷ days left including today, rounded down, never below 0; **vs last month** = this month vs last month cut at the same day |
 | `bills` | month totals (total, paid, left), next bill, due-day clamping, skip |
-| `parser` | text → drafts: kind, title, date words, time (incl. «4 العصر», «بكرة 4»), amount, area/category, repeat, urgent; Arabic digits; whole words only; amounts are never times. Cases in `apps/app/src/logic/parser.test.ts` (from `design/tests/parser.cases.js`) |
-| `bankMessages` | `readBankMessages(text, today)` → `{ found[], skipped{code, income, other} }`: splits several messages, finds SAR amount (ignores balance lines), shop, date (d/m/y or y/m/d, never in the future), time, type; skips codes, incoming money, non-SAR. Never keeps card digits or the text. Cases in `apps/app/src/logic/bankMessages.test.ts` (from `design/tests/bank-messages.cases.js`) |
+| `parser` | text → drafts: kind, title, date words, time (incl. «4 العصر», «بكرة 4»), amount, area/category, repeat, urgent; Arabic digits; whole words only; amounts are never times. Cases in `apps/app/src/logic/parser.test.ts` |
+| `bankMessages` | `readBankMessages(text, today)` → `{ found[], skipped{code, income, other} }`: splits several messages, finds SAR amount (ignores balance lines), shop, date (d/m/y or y/m/d, never in the future), time, type; skips codes, incoming money, non-SAR. Never keeps card digits or the text. Cases in `apps/app/src/logic/bankMessages.test.ts` |
 | `matchBill` | a pasted purchase that matches an unpaid bill (same amount; name overlap, or the only bill with that amount) |
 | `assistant` | `brief(state, today)` and `reply(text, state, today)` → message parts: keyword intents (today, overdue, bills, spending, help, thanks) or an **add card** for one clear draft. The single seam for a future AI mode |
 
@@ -146,7 +146,7 @@ interface StorageAdapter {
 - **Full-screen overlay**: Focus (always dark), Setup, the "Quick tour?" card, the 11 tips.
 - **Sheets** (✕ · title · ✓): details page and its repeat page, new area, add spending, bill sheet, paste messages + review, review list, Yawmie's chat, export, import, the 3 steps.
 - **First open**: `load()` returns `null` → `emptyState()` → Setup (7 steps) → "Quick tour? 11 short tips" (Show me / Skip) → tips → the empty-state cards. `settings.setupDone` and `settings.tourDone` keep them from coming back.
-- Screens in detail: [PRD.md](PRD.md) §6; look: [design/demo.html](../design/demo.html). The demo's "Try as a new user" button and its made-up data are demo-only.
+- Screens in detail: [PRD.md](PRD.md) §6; look: [the clickable demo](https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA). The demo's "Try as a new user" button and its made-up data are demo-only.
 
 ### Main flows
 
@@ -188,7 +188,6 @@ Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only
 .github/        the deploy workflow
 apps/app/       the Yawmie app: src/ (model/ logic/ storage/ integrations/ i18n/ ui/ mode.ts main.tsx), public/ (icons), index.html, vite.config.ts, tsconfig.json
 apps/site/      the landing page at yawmie.me (vendor/ = third-party GSAP, its own license)
-design/         demo.html, brandkit.html, concepts/ (made-up data only)
 docs/           PRD.md, ARCHITECTURE.md, README.ar.md, images/, spikes.md, superpowers/plans/
 tooling/        scripts/ (check-privacy.mjs, assemble-site.sh), githooks/ (pre-push)
 CLAUDE.md  LICENSE  README.md  package.json  package-lock.json

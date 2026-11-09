@@ -1,4 +1,4 @@
-// English UI text. Same keys as ar.ts (a test checks). Copied from design/demo.html.
+// English UI text. Same keys as ar.ts (a test checks). Copied from the clickable demo.
 import type { StringTable } from './types';
 
 export const en = {

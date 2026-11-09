@@ -2,7 +2,7 @@
 
 Product requirements for Yawmie, a personal life-management app for the iPhone. Version 2.1, 2026-11-09.
 
-Related: [ARCHITECTURE.md](ARCHITECTURE.md) (how it's built), [CLAUDE.md](../CLAUDE.md) (rules for working on it), [design/demo.html](../design/demo.html) (clickable demo with made-up data, the source of truth for the look; its "Try as a new user" button and data are demo-only).
+Related: [ARCHITECTURE.md](ARCHITECTURE.md) (how it's built), [CLAUDE.md](../CLAUDE.md) (rules for working on it), [the clickable demo](https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA) (clickable demo with made-up data, the source of truth for the look; its "Try as a new user" button and data are demo-only).
 
 ---
 
@@ -151,7 +151,7 @@ Priority: **P0** = must have for v1, **P1** = should have, **P2** = later. Every
 
 ### 6.8 Yawmie, the assistant
 
-The character «يومي» ([design/buddy.png](../design/buddy.png)) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
+The character «يومي» ([apps/app/src/assets/buddy.png](../apps/app/src/assets/buddy.png)) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
 
 | ID | Requirement |
 |---|---|
@@ -293,7 +293,7 @@ An iPhone app on **iOS 26**: large titles, rounded grouped lists, round ✕/✓ 
 | iOS deletes the app's data (unused website, deleted icon, full phone) | Persistent storage request, use from the Home Screen icon, monthly backup reminder, a clear warning |
 | Safari and the Home Screen app keep separate data | Always use the Home Screen icon; a card says so when opened in Safari |
 | Voice needs Siri & Dictation, and may behave differently from the Home Screen | Clear message in the chat; the keyboard mic always works |
-| The reader misreads a sentence or a bank's message format | Everything goes through review; the readers are tested with Arabic and English examples (`design/tests/`) |
+| The reader misreads a sentence or a bank's message format | Everything goes through review; the readers are tested with Arabic and English examples |
 | Shortcut behavior changes in a future iOS | The reminder link is one small piece, easy to change; test it first |
 | People can't save in someone else's shared artifact (Claude's rules let only the owner, invited editors and team members save) | Each person publishes their own copy of the artifact file from the repo; HOW-IT-WORKS.md says how |
 | Claude limits how much one artifact can store | Data is split into small pieces; tested with a year of made-up data |

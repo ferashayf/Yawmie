@@ -1,4 +1,4 @@
-// Arabic UI text. Same keys as en.ts (a test checks). Copied from design/demo.html.
+// Arabic UI text. Same keys as en.ts (a test checks). Copied from the clickable demo.
 import type { StringTable } from './types';
 
 export const ar = {

@@ -1,4 +1,4 @@
-/* Look and feel, copied from design/demo.html (the source of truth). */
+/* Look and feel, copied from the clickable demo (the source of truth). */
 /* Type ramp (2026-11-09): 12 · 13 · 15 · 17 · 20 · 28 · 34, display numbers 54 / 64. Nothing under 12px. */
 /* Layout idea: frosted glass panels floating over a burgundy dawn glow and silver haze.
    Signature: the logo's day-arc, alive — day progress on Today, bills-paid on Bills, budget on Spending. */
@@ -386,7 +386,7 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 .quickfill input { flex: 1; }
 .meta-icons { display: inline-flex; gap: 4px; color: var(--sub); }
 
-/* ===== iOS 26 "Liquid Glass" layer (2026-11-08). Same look as design/concepts/glass.html. ===== */
+/* ===== iOS 26 "Liquid Glass" layer (2026-11-08). Same look as the glass concept. ===== */
 .glass { position: relative; border: 0;
   background: linear-gradient(180deg, color-mix(in srgb, var(--rim1) 32%, transparent), transparent 55%), var(--glass);
   -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);

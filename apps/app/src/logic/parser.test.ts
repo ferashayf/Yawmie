@@ -4,7 +4,7 @@ import { parseAll, parseOne } from './parser';
 
 const TODAY = '2026-11-09'; // Monday
 
-// Made-up text only. Moved from design/tests/parser.cases.js.
+// Made-up text only.
 const CASES: { text: string; want: Partial<Draft> }[] = [
   { text: 'اجتماع مع المصمم بكرة 4', want: { kind: 'appointment', time: '16:00', title: 'اجتماع مع المصمم', date: '2026-11-10' } },
   { text: 'موعد الأسنان 5 العصر', want: { time: '17:00' } },

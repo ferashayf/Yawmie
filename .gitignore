@@ -23,3 +23,6 @@ public-site/
 
 # Brand artwork stays on this Mac only; the app keeps the pictures it uses in apps/app
 brand/
+
+# Design mockups, demo and concepts stay on this Mac only
+design/

@@ -5,7 +5,7 @@ import { isDuplicate, matchBill } from './matchBill';
 
 const TODAY = '2026-11-09';
 
-// Made-up messages only: no real card numbers, shops or amounts. Moved from design/tests/bank-messages.cases.js.
+// Made-up messages only: no real card numbers, shops or amounts.
 // Each item: kind|halalas|merchant|date|time|category.
 const CASES: { name: string; text: string; want: Partial<Record<'items' | 'n' | 'code' | 'income' | 'other', unknown>> }[] = [
   { name: 'ar pos', text: 'شراء عبر نقاط البيع\nبطاقة: ***0000 مدى\nمبلغ: 23.00 SAR\nلدى: CORNER CAFE\nفي: 09/11/26 08:14', want: { items: ['expense|2300|Corner Cafe|2026-11-09|08:14|food'] } },

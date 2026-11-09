@@ -1,4 +1,4 @@
-// Drawn SVG icons, one stroke style. Copied from design/demo.html. Our own markup, never user text.
+// Drawn SVG icons, one stroke style. Copied from the clickable demo. Our own markup, never user text.
 export const I = {
   share: "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v12M8 7l4-4 4 4\"/><path d=\"M6 11H5v10h14V11h-1\"/></svg>",
   restore: "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12a8 8 0 1 0 2.4-5.7L4 8.5\"/><path d=\"M4 4v4.5h4.5\"/></svg>",
@@ -42,7 +42,7 @@ export const I = {
 
 export type IconName = keyof typeof I;
 
-// Area icons (inner SVG paths, drawn at any size). Copied from design/demo.html.
+// Area icons (inner SVG paths, drawn at any size). Copied from the clickable demo.
 export const AREA_ICON_PATHS = {
   brief: "<rect x=\"3.5\" y=\"7\" width=\"17\" height=\"12.5\" rx=\"3\"/><path d=\"M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17\"/>",
   rocket: "<path d=\"M12 15l-3-3c1.5-5 5-8 10-8 0 5-3 8.5-8 10z\"/><path d=\"M9 12H5l2-4h4M12 15v4l4-2v-4\"/>",
