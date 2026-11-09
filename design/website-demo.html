@@ -78,14 +78,14 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 .nav { position: fixed; z-index: 20; top: calc(env(safe-area-inset-top, 0px) + 14px); inset-inline: 0; }
 .nav-in { margin-inline: auto; max-width: 1080px; display: flex; align-items: center; gap: 8px; padding: 8px; padding-inline-start: 14px; border-radius: 999px; background: var(--glass); border: 1px solid var(--edge); backdrop-filter: blur(22px) saturate(1.4); -webkit-backdrop-filter: blur(22px) saturate(1.4); box-shadow: var(--shadow); }
 .nav-wrap { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -.02em; margin-inline-end: auto; }
+.brand { display: flex; align-items: center; min-height: 44px; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: -.02em; margin-inline-end: auto; }
 .brand svg { width: 34px; height: 34px; }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a { padding: 10px 14px; border-radius: 999px; text-decoration: none; color: var(--sub); font-size: 15px; font-weight: 600; }
 .nav-links a:hover { color: var(--ink); background: var(--chip); }
 .nav .btn { min-height: 44px; padding-inline: 18px; font-size: 15px; }
 @media (max-width: 820px) { .nav-links { display: none; } }
-@media (max-width: 440px) { .nav .btn span { display: none; } .nav .btn { padding-inline: 14px; } }
+@media (max-width: 440px) { .nav .btn { display: none; } }
 
 /* ---------- hero ---------- */
 /* The hero is the character's room: always the brand burgundy (same in light and dark), matching his art. */
@@ -241,7 +241,7 @@ bdi, .num { font-variant-numeric: tabular-nums; }
   .slice.on .slice-body { display: grid; }
   .slice-body h3 { margin-top: 0; }
   .slice-body p { margin-inline: auto; }
-  .slice-body .phone { width: min(280px, 100%); }
+  .slice-body .phone { width: min(230px, 100%); }
 }
 
 /* ---------- stacking cards ---------- */
@@ -282,7 +282,7 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes ring { from { transform: scale(1); opacity: .6; } to { transform: scale(1.7); opacity: 0; } }
 @media (max-width: 820px) {
-  .scard { grid-template-columns: minmax(0, 1fr); top: calc(88px + var(--i) * 14px); min-height: 0; }
+  .scard { grid-template-columns: minmax(0, 1fr); position: relative; top: auto; min-height: 0; }
 }
 
 /* ---------- privacy ---------- */
@@ -335,7 +335,7 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); margin-top: 120px; }
 .foot { display: flex; flex-wrap: wrap; gap: 24px 40px; align-items: center; justify-content: space-between; }
 .foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
-.foot nav a { text-decoration: none; color: var(--sub); font-weight: 600; font-size: 15px; }
+.foot nav a { display: inline-block; padding-block: 12px; text-decoration: none; color: var(--sub); font-weight: 600; font-size: 15px; }
 .foot nav a:hover { color: var(--ink); }
 .giant { margin-top: 48px; font-size: clamp(120px, 26vw, 360px); font-weight: 800; line-height: .8; letter-spacing: -.06em; text-align: center; color: transparent; -webkit-text-stroke: 1.5px var(--line); background: linear-gradient(var(--ink), transparent 80%); -webkit-background-clip: text; background-clip: text; opacity: .14; user-select: none; }
 .legal { flex-basis: 100%; color: var(--dim); font-size: 13px; max-width: 70ch; margin: 0; }
@@ -453,7 +453,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       bubble: 'Hi, I am Yawmie!',
       h1a: 'Your day', h1b: ' and your money, in one calm place',
       heroP: 'Tasks, appointments, bills and budgets on your iPhone. Free and private.',
-      ctaOpen: 'Open yawmie.me', gh: 'Download on GitHub',
+      ctaOpen: 'Open yawmie.me', gh: 'GitHub',
  featH: 'What matters today, at the top.',
       left: 'Left', appts: 'Appointments', late: 'Late', safeToday: 'Safe to spend today',
       warn80: 'Warns at 80%', warn100: 'and at 100%', paidOf: '3 of 5 paid', leftPay: 'left to pay',
@@ -503,7 +503,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       bubble: 'هلا، أنا يومي!',
       h1a: 'يومك', h1b: ' وفلوسك، في مكان واحد هادئ',
       heroP: 'مهامك ومواعيدك وفواتيرك وميزانيتك على جوالك. مجاني وخاص.',
-      ctaOpen: 'افتح yawmie.me', gh: 'حمّله من GitHub',
+      ctaOpen: 'افتح yawmie.me', gh: 'GitHub',
  featH: 'المهم اليوم، فوق قدامك.',
       left: 'باقية', appts: 'مواعيد', late: 'متأخرة', safeToday: 'تقدر تصرف اليوم',
       warn80: 'تنبيه عند 80%', warn100: 'وعند 100%', paidOf: 'دفعت 3 من 5', leftPay: 'باقي للدفع',
@@ -789,7 +789,8 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       gsap.to('.hero-buddy', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
 
-      var cards = gsap.utils.toArray('.scard');
+      // shortcut: checked once on load; stacking only on wide screens, where the cards fit the window.
+      var cards = matchMedia('(min-width: 821px)').matches ? gsap.utils.toArray('.scard') : [];
       cards.forEach(function (card, i) {
         if (i === cards.length - 1) return;
         var tl = gsap.timeline({ scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 30%', scrub: true } });

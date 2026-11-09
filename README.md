@@ -16,6 +16,14 @@ A personal life-management app for the iPhone, in Arabic and English: tasks, app
 
 Everyone starts with an empty app. There's no account, no server and no tracking.
 
+## Use it in Claude
+
+Each person makes their own copy, so it saves in their own Claude account. Signed in to Claude, paste this message:
+
+> Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+
+Claude fetches the file and publishes your private copy. If Claude can't open links where you use it, download `yawmie-artifact.html` from the latest release, attach it, and paste the same message.
+
 ## Privacy
 
 - No backend, no accounts, no analytics, no third-party calls.

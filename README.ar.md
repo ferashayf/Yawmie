@@ -18,6 +18,14 @@
 
 الكل يبدأ بتطبيق فارغ. بدون حساب، بدون خادم، بدون تتبّع.
 
+## استخدامه داخل Claude
+
+كل شخص يسوي نسخته الخاصة، عشان تنحفظ بياناته في حسابه هو في Claude. وأنت مسجّل دخول في Claude، الصق هذه الرسالة كما هي:
+
+> Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+
+Claude يجيب الملف وينشر نسختك الخاصة. لو Claude ما يقدر يفتح الروابط عندك، نزّل الملف `yawmie-artifact.html` من آخر إصدار، أرفقه، والصق نفس الرسالة.
+
 ## الخصوصية
 
 - لا خادم، لا حسابات، لا إحصائيات، ولا أي اتصال بطرف ثالث.

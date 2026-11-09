@@ -6,6 +6,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const SKIP = new Set(['package-lock.json', 'scripts/check-privacy.test.mjs']);
+// Third-party library files kept as published (their license headers name the authors).
+const SKIP_DIRS = ['site/vendor/'];
 const MIN_CARD_DIGITS = 13;
 
 const PATTERNS = [
@@ -74,7 +76,7 @@ function main() {
   const words = readWords();
   const leaks = [];
   for (const path of repoFiles()) {
-    if (SKIP.has(path) || !existsSync(path)) continue;
+    if (SKIP.has(path) || SKIP_DIRS.some((d) => path.startsWith(d)) || !existsSync(path)) continue;
     const buf = readFileSync(path);
     if (isBinary(buf)) continue;
     leaks.push(...findLeaks(buf.toString('utf8'), path, words));
