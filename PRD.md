@@ -247,7 +247,7 @@ The app always starts empty. First open = setup, then the tour offer, then the e
 Don't delete the Yawmie icon without exporting first.
 
 **Claude artifact**
-1. **Once:** publish your own copy of the Yawmie artifact file from the GitHub repo (the guide shows how), signed in to Claude.
+1. **Once:** signed in to Claude, paste the message from the README ("Publish Yawmie for me from github.com/ferashayf/Yawmie …"). Claude fetches the file and publishes your own copy.
 2. Nothing else: changes save by themselves.
 
 ## 7. Look and feel
