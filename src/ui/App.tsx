@@ -10,7 +10,6 @@ import { AppContext, type App as AppValue, type SheetRequest, type Tab } from '.
 import { CantSave } from './CantSave';
 import { startClock, type Clock } from './clock';
 import { Dock } from './Dock';
-import { Placeholder } from './screens/Placeholder';
 import { Today } from './screens/Today';
 import { Plan } from './screens/Plan';
 import { BlockPage } from './screens/BlockPage';
@@ -23,6 +22,8 @@ import { Money } from './screens/Money';
 import { BillSheet, PasteSheet, SpendSheet } from './sheets/MoneySheets';
 import { ChatSheet, type ChatMsg } from './sheets/ChatSheet';
 import { Bubble } from './Bubble';
+import { Settings } from './screens/Settings';
+import { ExportRunner, ImportSheet, StepsSheet } from './sheets/SettingsSheets';
 import { parseAll } from '../logic/parser';
 import type { PlanView } from './app-context';
 import { createStore, type Store } from './store';
@@ -67,6 +68,7 @@ function Shell({ store }: { store: Store }) {
   const [page, setPage] = useState<SheetRequest | null>(null); // the block page, under any sheet
   const [chat, setChat] = useState<ChatMsg[]>([]);
   const [bubble, setBubble] = useState(true);
+  const [incoming, setIncoming] = useState<AppState | null>(null);
   const [plan, setPlanView] = useState<PlanView>({ day: '', week: 0, area: 'all', editing: false });
   const [toast, setToast] = useState<ToastState>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -138,13 +140,16 @@ function Shell({ store }: { store: Store }) {
         <div class="phone">
           <canvas ref={canvas} id="waves" aria-hidden="true" />
           <main class="screen">
-            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : tab === 'money' ? <Money /> : <Placeholder tab={tab} />}
+            {page?.id ? <BlockPage id={page.id} day={page.date ?? clock.today} /> : tab === 'today' ? <Today /> : tab === 'plan' ? <Plan /> : tab === 'tasks' ? <Tasks /> : tab === 'money' ? <Money /> : tab === 'settings' ? <Settings onImport={(s) => { setIncoming(s); setSheet({ kind: 'import' }); }} /> : null}
           </main>
           <Dock onBuddy={() => setSheet({ kind: 'chat' })} />
           {sheet?.kind === 'focus' && sheet.id && <Focus id={sheet.id} />}
           {sheet?.kind === 'area' && <AreaSheet />}
           {sheet && <AddOrEdit req={sheet} today={clock.today} />}
           {sheet?.kind === 'chat' && <ChatSheet log={chat} setLog={setChat} />}
+          {sheet?.kind === 'steps' && <StepsSheet />}
+          {sheet?.kind === 'export' && <ExportRunner />}
+          {sheet?.kind === 'import' && incoming && <ImportSheet incoming={incoming} />}
           {bubble && !sheet && !page && <Bubble onClose={() => setBubble(false)} />}
           {toast && <Toast text={toast.text} onUndo={toast.undo} action={toast.action} />}
         </div>
