@@ -2,7 +2,7 @@
 
 Product requirements for Yawmie, a personal life-management app for the iPhone. Version 2.1, 2026-11-09.
 
-Related: [ARCHITECTURE.md](ARCHITECTURE.md) (how it's built), [CLAUDE.md](CLAUDE.md) (rules for working on it), [design/demo.html](design/demo.html) (clickable demo with made-up data, the source of truth for the look; its "Try as a new user" button and data are demo-only).
+Related: [ARCHITECTURE.md](ARCHITECTURE.md) (how it's built), [CLAUDE.md](../CLAUDE.md) (rules for working on it), [design/demo.html](../design/demo.html) (clickable demo with made-up data, the source of truth for the look; its "Try as a new user" button and data are demo-only).
 
 ---
 
@@ -67,7 +67,7 @@ The person picks one. Same screens and logic; one **mode** setting decides which
 
 - The code is **open source under the MIT license**, public on GitHub.
 - The **brand is not MIT**: the name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved", kept in `brand/` with their own notice and `TRADEMARKS.md`. Use the code freely; forks use their own name, character and logo.
-- README in Arabic and English, and a CONTRIBUTING guide.
+- README in Arabic and English.
 - **No personal data in the repo, ever.** A pre-push check blocks phone numbers, emails and real shop names.
 
 ## 6. Features
@@ -152,7 +152,7 @@ Priority: **P0** = must have for v1, **P1** = should have, **P2** = later. Every
 
 ### 6.8 Yawmie, the assistant
 
-The character «يومي» ([design/buddy.png](design/buddy.png); brand artwork, all rights reserved) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
+The character «يومي» ([design/buddy.png](../design/buddy.png); brand artwork, all rights reserved) on a burgundy tile. Offline, a friendly Saudi buddy (casual dialect, warm, short).
 
 | ID | Requirement |
 |---|---|
@@ -253,7 +253,7 @@ Don't delete the Yawmie icon without exporting first.
 
 ## 7. Look and feel
 
-An iPhone app on **iOS 26**: large titles, rounded grouped lists, round ✕/✓ on sheets, a floating dock. **Light mode** = see-through frosted glass over a teal glow and a burgundy haze with fine contour lines; **dark mode** = solid charcoal cards on near-black. **Burgundy** is the brand (logo, Yawmie's tile, the "now" dot, Add, urgent); **teal** is the in-app accent (progress, paid, selected, done) and never sits next to the logo or the character; amber and red only for warnings. The **day arc** from the logo is the one signature shape (the day, bills paid, the budget). Apple's rounded system font. Full rules: [CLAUDE.md](CLAUDE.md) → Design.
+An iPhone app on **iOS 26**: large titles, rounded grouped lists, round ✕/✓ on sheets, a floating dock. **Light mode** = see-through frosted glass over a teal glow and a burgundy haze with fine contour lines; **dark mode** = solid charcoal cards on near-black. **Burgundy** is the brand (logo, Yawmie's tile, the "now" dot, Add, urgent); **teal** is the in-app accent (progress, paid, selected, done) and never sits next to the logo or the character; amber and red only for warnings. The **day arc** from the logo is the one signature shape (the day, bills paid, the budget). Apple's rounded system font. Full rules: [CLAUDE.md](../CLAUDE.md) → Design.
 
 ## 8. Privacy and security
 

@@ -13,11 +13,10 @@
   <a href="https://yawmie.me"><b>Website</b></a> ·
   <a href="https://yawmie.me/app/"><b>Open the app</b></a> ·
   <a href="#use-it-in-claude-as-an-artifact"><b>Use it in Claude</b></a> ·
-  <a href="#two-ways-to-use-it"><b>Get started</b></a> ·
-  <a href="CONTRIBUTING.md"><b>Contribute</b></a>
+  <a href="#two-ways-to-use-it"><b>Get started</b></a>
 </p>
 
-<p align="center"><b>English</b> · <a href="README.ar.md">العربية</a></p>
+<p align="center"><b>English</b> · <a href="docs/README.ar.md">العربية</a></p>
 
 <p align="center">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-0F8F7A">
@@ -84,7 +83,7 @@ A normal Claude chat can't do step 3: the app file is too big for Claude to writ
 
 ## For developers
 
-How it's built: [ARCHITECTURE.md](ARCHITECTURE.md). What it does: [PRD.md](PRD.md). How to help: [CONTRIBUTING.md](CONTRIBUTING.md).
+How it's built: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). What it does: [docs/PRD.md](docs/PRD.md). The app is in `apps/app/`, the landing page in `apps/site/`.
 
 Run locally (Node 24):
 
@@ -98,4 +97,4 @@ npm run build:artifact   # Claude artifact → dist-artifact/index.html
 
 ## License
 
-Code: [MIT](LICENSE). The name Yawmie / يومي, the character, the logo, the icon and all artwork, screenshots included, are **all rights reserved**: see [TRADEMARKS.md](TRADEMARKS.md). Forks use their own name and art. Third-party files in `site/vendor/` (GSAP) keep their own license, noted at the top of each file.
+Code: [MIT](LICENSE). The name Yawmie / يومي, the character, the logo, the icon and all artwork, screenshots included, are **all rights reserved**: see [docs/TRADEMARKS.md](docs/TRADEMARKS.md). Forks use their own name and art. Third-party files in `apps/site/vendor/` (GSAP) keep their own license, noted at the top of each file.

@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import buddy from '../../../brand/buddy.png';
+import buddy from '../../../../../brand/buddy.png';
 import { fmtDate, fmtTime } from '../../i18n/format';
 import { placeTasks } from '../../logic/blocks';
 import { daysBetween } from '../../logic/dates';

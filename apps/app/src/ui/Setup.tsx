@@ -1,4 +1,4 @@
-import buddy from '../../brand/buddy.png';
+import buddy from '../../../../brand/buddy.png';
 import { fmtTime } from '../i18n/format';
 import { weekday } from '../logic/dates';
 import { setBudget } from '../logic/money-edits';

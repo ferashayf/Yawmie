@@ -2,8 +2,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="brand/logo/yawmie-lockup-light-text.png">
-    <img src="brand/logo/yawmie-lockup-dark-text.png" alt="Yawmie · يومي" width="300">
+    <source media="(prefers-color-scheme: dark)" srcset="../brand/logo/yawmie-lockup-light-text.png">
+    <img src="../brand/logo/yawmie-lockup-dark-text.png" alt="Yawmie · يومي" width="300">
   </picture>
 </p>
 
@@ -15,11 +15,10 @@
   <a href="https://yawmie.me"><b>الموقع</b></a> ·
   <a href="https://yawmie.me/app/"><b>افتح التطبيق</b></a> ·
   <a href="#استخدامه-داخل-claude-كـ-artifact"><b>استخدمه داخل Claude</b></a> ·
-  <a href="#طريقتان-للاستخدام"><b>ابدأ</b></a> ·
-  <a href="CONTRIBUTING.md"><b>ساهم</b></a>
+  <a href="#طريقتان-للاستخدام"><b>ابدأ</b></a>
 </p>
 
-<p align="center"><a href="README.md">English</a> · <b>العربية</b></p>
+<p align="center"><a href="../README.md">English</a> · <b>العربية</b></p>
 
 <p align="center">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-0F8F7A">
@@ -29,7 +28,7 @@
   <img alt="Works offline" src="https://img.shields.io/badge/works-offline-5A5A5A">
 </p>
 
-<p align="center"><img src="docs/images/hero.png" alt="يومي على الآيفون" width="100%"></p>
+<p align="center"><img src="images/hero.png" alt="يومي على الآيفون" width="100%"></p>
 
 > **الحالة:** قيد التطوير، ليس جاهزًا للاستخدام بعد.
 
@@ -37,14 +36,14 @@
 
 <table>
 <tr>
-<td align="center" width="33%" valign="top"><img src="docs/images/today.png" width="230" alt="يومك بنظرة"><br><b>يومك بنظرة</b><br><sub>التالي، الإضافة السريعة، ويومك كقوس واحد</sub></td>
-<td align="center" width="33%" valign="top"><img src="docs/images/plan.png" width="230" alt="خطط بفترات اليوم"><br><b>خطط بفترات اليوم</b><br><sub>فترات تتكرر للعمل والدراسة وغيرها، مع وضع التركيز</sub></td>
-<td align="center" width="33%" valign="top"><img src="docs/images/money.png" width="230" alt="تقدر تصرف اليوم"><br><b>تقدر تصرف اليوم</b><br><sub>الميزانية والفواتير وكم تقدر تصرف اليوم</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/today.png" width="230" alt="يومك بنظرة"><br><b>يومك بنظرة</b><br><sub>التالي، الإضافة السريعة، ويومك كقوس واحد</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/plan.png" width="230" alt="خطط بفترات اليوم"><br><b>خطط بفترات اليوم</b><br><sub>فترات تتكرر للعمل والدراسة وغيرها، مع وضع التركيز</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/money.png" width="230" alt="تقدر تصرف اليوم"><br><b>تقدر تصرف اليوم</b><br><sub>الميزانية والفواتير وكم تقدر تصرف اليوم</sub></td>
 </tr>
 <tr>
-<td align="center" width="33%" valign="top"><img src="docs/images/bank-messages.png" width="230" alt="الصق رسائل البنك"><br><b>الصق رسائل البنك</b><br><sub>تنقرأ في جوالك، تراجعها، وتنربط بفواتيرك</sub></td>
-<td align="center" width="33%" valign="top"><img src="docs/images/yawmie-chat.png" width="230" alt="كلّم يومي"><br><b>كلّم يومي</b><br><sub>ملخص يومك، وأضف أي شي بجملة وحدة</sub></td>
-<td align="center" width="33%" valign="top"><img src="docs/images/today-ar-dark.png" width="230" alt="عربي وإنجليزي"><br><b>عربي وإنجليزي</b><br><sub>من اليمين لليسار، فاتح وداكن، وأرقام 0–9</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/bank-messages.png" width="230" alt="الصق رسائل البنك"><br><b>الصق رسائل البنك</b><br><sub>تنقرأ في جوالك، تراجعها، وتنربط بفواتيرك</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/yawmie-chat.png" width="230" alt="كلّم يومي"><br><b>كلّم يومي</b><br><sub>ملخص يومك، وأضف أي شي بجملة وحدة</sub></td>
+<td align="center" width="33%" valign="top"><img src="images/today-ar-dark.png" width="230" alt="عربي وإنجليزي"><br><b>عربي وإنجليزي</b><br><sub>من اليمين لليسار، فاتح وداكن، وأرقام 0–9</sub></td>
 </tr>
 </table>
 
@@ -86,10 +85,10 @@
 
 ## للمطورين
 
-طريقة البناء: [ARCHITECTURE.md](ARCHITECTURE.md). المتطلبات: [PRD.md](PRD.md). المساهمة: [CONTRIBUTING.md](CONTRIBUTING.md).
+طريقة البناء: [ARCHITECTURE.md](ARCHITECTURE.md). المتطلبات: [PRD.md](PRD.md). التطبيق في `apps/app/`، وصفحة الموقع في `apps/site/`.
 
 ## الترخيص
 
-الكود: [MIT](LICENSE). أما اسم Yawmie / يومي، وشخصية «يومي»، والشعار، والأيقونة، وكل الرسومات واللقطات: **جميع الحقوق محفوظة**. التفاصيل في [TRADEMARKS.md](TRADEMARKS.md). النسخ المشتقة تستخدم اسمها ورسوماتها الخاصة.
+الكود: [MIT](../LICENSE). أما اسم Yawmie / يومي، وشخصية «يومي»، والشعار، والأيقونة، وكل الرسومات واللقطات: **جميع الحقوق محفوظة**. التفاصيل في [TRADEMARKS.md](TRADEMARKS.md). النسخ المشتقة تستخدم اسمها ورسوماتها الخاصة.
 
 </div>

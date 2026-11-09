@@ -1,3 +1,3 @@
 #!/bin/sh
 # Stops a push that contains phone numbers, emails, card numbers or your private words.
-exec node scripts/check-privacy.mjs
+exec node tooling/scripts/check-privacy.mjs

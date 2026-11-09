@@ -5,13 +5,13 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "build:artifact": "tsc --noEmit && vite build --mode artifact",
-    "preview": "vite preview",
-    "test": "vitest run && node --test 'scripts/*.test.mjs'",
-    "check:privacy": "node scripts/check-privacy.mjs",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "dev": "vite apps/app",
+    "build": "tsc --noEmit -p apps/app && vite build apps/app",
+    "build:artifact": "tsc --noEmit -p apps/app && vite build apps/app --mode artifact",
+    "preview": "vite preview apps/app",
+    "test": "vitest run --root apps/app && node --test 'tooling/scripts/*.test.mjs'",
+    "check:privacy": "node tooling/scripts/check-privacy.mjs",
+    "prepare": "git config core.hooksPath tooling/githooks || true"
   },
   "dependencies": {
     "idb-keyval": "^6.3.0",

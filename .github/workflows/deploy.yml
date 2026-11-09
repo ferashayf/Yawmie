@@ -32,7 +32,7 @@ jobs:
       - run: npm test
       - run: npm run check:privacy
       - run: npm run build
-      - run: sh scripts/assemble-site.sh public-site
+      - run: sh tooling/scripts/assemble-site.sh public-site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,6 +1,6 @@
 # CLAUDE.md — Yawmie / يومي
 
-Personal life-management app, **open source (MIT)**, one person per copy, used on the iPhone: tasks, appointments, time blocks, bills, spending, budgets, and a friendly assistant. What it does: [PRD.md](PRD.md). How it's built: [ARCHITECTURE.md](ARCHITECTURE.md) (read before changing structure). Build plan: [docs/superpowers/plans/2026-11-09-yawmie-v1.md](docs/superpowers/plans/2026-11-09-yawmie-v1.md).
+Personal life-management app, **open source (MIT)**, one person per copy, used on the iPhone: tasks, appointments, time blocks, bills, spending, budgets, and a friendly assistant. What it does: [docs/PRD.md](docs/PRD.md). How it's built: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) (read before changing structure). Build plan: [docs/superpowers/plans/2026-11-09-yawmie-v1.md](docs/superpowers/plans/2026-11-09-yawmie-v1.md).
 
 **Status (2026-11-09):** planning, no app code yet. The clickable demo with made-up data is the source of truth for the look and behavior: [design/demo.html](design/demo.html), published at https://claude.ai/artifact/52AjV6NhPtswFhb1tavmsA (version 62). The demo's "Try as a new user" button and its made-up data are demo-only.
 **Next:** owner approves the build plan → spikes → repo setup → build v1 → after v1, write `HOW-IT-WORKS.md`, a plain-language user guide for both ways of using it.
@@ -37,14 +37,14 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 6. iPhone integration only through **Apple Shortcuts** (Reminders) and the browser's own APIs. No Apple Pay import, no bank login.
 7. Website app works offline after the first load.
 8. **Logic and screens never touch storage directly:** they use the `StorageAdapter`; screens ask the **mode** which parts to show.
-9. **The brand is not MIT.** The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved", kept in `brand/` with their own notice and `TRADEMARKS.md`. Code is free to use; forks use their own name, character and logo.
+9. **The brand is not MIT.** The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved", kept in `brand/` with their own notice and `docs/TRADEMARKS.md`. Code is free to use; forks use their own name, character and logo.
 
 ## Decisions
 
 - **Two GitHub repos:** `ferashayf/Yawmie-Private` (git remote `origin`, private backup of all work; push freely) and `ferashayf/Yawmie` (remote `public`, for users; push only with the owner's yes, Task 29).
-- **Open source, MIT** for the code; brand assets reserved (constraint 9). README in Arabic + English, CONTRIBUTING, a pre-push check for phone numbers, emails and real shop names.
+- **Open source, MIT** for the code; brand assets reserved (constraint 9). README in Arabic + English (`docs/README.ar.md`), a pre-push check for phone numbers, emails and real shop names.
 - **No sample data for users.** First open of an empty app: the 7-step setup, then a card "Quick tour? 11 short tips" (Show me / Skip), the spotlight tips, and the empty-state cards.
-- **Addresses:** the landing page (`site/`, built in its own session) is at **https://yawmie.me**; the website app is at **https://yawmie.me/app/** (GitHub Pages, custom domain). Native SwiftUI is the fallback if the web app disappoints.
+- **Addresses:** the landing page (`apps/site/`, built in its own session) is at **https://yawmie.me**; the website app is at **https://yawmie.me/app/** (GitHub Pages, custom domain). Native SwiftUI is the fallback if the web app disappoints.
 - Claude artifact: a single-file HTML build of the same code; data through the artifact `db` capability; data-safety parts, backup card and mic hidden (see the table above).
 - Text → items: built-in rule-based reader + confirm. No AI in v1 (maybe later: opt-in, the owner's own key).
 - Voice: the browser speech API (needs Siri & Dictation on the iPhone; blocked inside the claude.ai preview). The keyboard mic is the fallback. No spoken replies.
@@ -63,9 +63,9 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 - Keep the .md files describing the app **as it is now**; no change logs in them.
 - Smallest change that fully works. No dependency for a few lines. No feature beyond PRD.md without asking.
 - Match surrounding code. Small files, early returns, named constants.
-- `src/logic/` is pure: no browser APIs, no UI imports.
+- `apps/app/src/logic/` is pure: no browser APIs, no UI imports.
 - Never mutate stored state in place: build a new state and save it.
-- Storage goes through the `StorageAdapter` (`load()` / `save(state)`); never call IndexedDB or `window.claude` outside `src/storage/`. Mode-specific parts are chosen with `mode.ts` (`features.dataSafety`, `features.mic`, ...), never with ad-hoc checks in screens.
+- Storage goes through the `StorageAdapter` (`load()` / `save(state)`); never call IndexedDB or `window.claude` outside `apps/app/src/storage/`. Mode-specific parts are chosen with `apps/app/src/mode.ts` (`features.dataSafety`, `features.mic`, ...), never with ad-hoc checks in screens.
 - Validate everything from outside: typed text, pasted messages, imported JSON. Never render user text as raw HTML.
 - Money = integer halalas (1 SAR = 100). No floats for money.
 - Dates = local strings `YYYY-MM-DD` (+ `HH:mm`). No UTC conversion.
@@ -73,7 +73,7 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 - Logical CSS only (`inline-start`/`inline-end`), never left/right. Wrap money and mixed-direction text in `<bdi>`.
 - Format numbers/dates with `Intl` + `-u-nu-latn` so digits stay 0-9.
 - Never rely on the browser form `submit` alone: buttons and Return call the action directly (some frames block form sending).
-- Tests (Vitest) for recurrence, overdue sort, block placement, budget math and safe to spend, the text reader, the bank-message reader, bill matching, import validation, i18n keys and digits. Starting cases: `design/tests/`. UI is checked in the browser and on the phone.
+- Tests (Vitest, in `apps/app/src`) for recurrence, overdue sort, block placement, budget math and safe to spend, the text reader, the bank-message reader, bill matching, import validation, i18n keys and digits. UI is checked in the browser and on the phone.
 - Commits: `<type>: <description>` (feat, fix, refactor, docs, test, chore, perf, ci).
 - Never commit `.env`, backups, or real exports.
 
@@ -124,12 +124,16 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 
 ## Commands
 
-- Privacy check: `node scripts/check-privacy.mjs` (runs before every push via `.githooks/pre-push`; its tests: `node --test 'scripts/*.test.mjs'`). Private words go in the git-ignored `.privacy-words`.
-- `npm run dev` (website app, localhost) · `npx vite --mode artifact` (artifact mode, local fake storage)
-- `npm run build` → `dist/` (website) · `npm run build:artifact` → `dist-artifact/index.html` (one file)
-- `npm test` (Vitest for `src/`, then the privacy-check tests)
-- `sh scripts/assemble-site.sh <folder>` → what yawmie.me serves: `site/` at `/`, the app at `/app/` (the deploy workflow does this)
+- Privacy check: `node tooling/scripts/check-privacy.mjs` (runs before every push via `tooling/githooks/pre-push`; its tests: `node --test 'tooling/scripts/*.test.mjs'`). Private words go in the git-ignored `.privacy-words`.
+- `npm run dev` (website app, localhost) · `npx vite apps/app --mode artifact` (artifact mode, local fake storage)
+- `npm run build` → `apps/app/dist/` (website) · `npm run build:artifact` → `apps/app/dist-artifact/index.html` (one file)
+- `npm test` (Vitest for `apps/app/src/`, then the privacy-check tests)
+- `sh tooling/scripts/assemble-site.sh <folder>` → what yawmie.me serves: `apps/site/` at `/`, the app at `/app/` (the deploy workflow does this)
 
 ## Skills to prefer
 
-`superpowers:brainstorming` → `writing-plans` for each feature; `test-driven-development` for `src/logic/`; `ui-ux-pro-max` for design; `verification-before-completion` before saying "done".
+`superpowers:brainstorming` → `writing-plans` for each feature; `test-driven-development` for `apps/app/src/logic/`; `ui-ux-pro-max` for design; `verification-before-completion` before saying "done".
+
+## Repo layout
+
+`apps/app/` the app · `apps/site/` the landing page · `brand/` · `design/` · `docs/` (PRD, ARCHITECTURE, TRADEMARKS, Arabic README, plan, images) · `tooling/` (scripts, git hooks) · `.github/` (deploy).

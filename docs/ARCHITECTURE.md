@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — Yawmie / يومي
 
-How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [design/demo.html](design/demo.html). Open source (MIT) except the brand ([TRADEMARKS.md](TRADEMARKS.md)).
+How the app is built, in plain language. Version 2.1, 2026-11-09. What it does: [PRD.md](PRD.md). How it looks: [design/demo.html](../design/demo.html). Open source (MIT) except the brand ([TRADEMARKS.md](TRADEMARKS.md)).
 
 ## 1. The big picture
 
@@ -20,7 +20,7 @@ One codebase, two builds. The person picks one way to use it.
  └──────────────────────┘
 ```
 
-- **Website app**: static files on **GitHub Pages** (HTTPS) at **yawmie.me/app/** (Vite `base: '/app/'`; the service worker and the Home Screen icon belong to `/app/`). The landing page from `site/` sits at the root, `yawmie.me`, and links to `/app/`. `CNAME` + DNS at the registrar. Works offline after the first open. **Data never leaves the phone.**
+- **Website app**: static files on **GitHub Pages** (HTTPS) at **yawmie.me/app/** (Vite `base: '/app/'`; the service worker and the Home Screen icon belong to `/app/`). The landing page from `apps/site/` sits at the root, `yawmie.me`, and links to `/app/`. `CNAME` + DNS at the registrar. Works offline after the first open. **Data never leaves the phone.**
 - **Claude artifact**: a single-file build of the same code, published as a Claude artifact with the `db`, `user` and `downloads` capabilities. Data is saved in the person's own Claude account. Needs Claude to run.
 - Neither has a server, account or analytics of ours.
 
@@ -28,15 +28,15 @@ One codebase, two builds. The person picks one way to use it.
 
 | Folder | Job | Depends on |
 |---|---|---|
-| `src/model/` | Data types, the empty starting state, validation of drafts and imported backups | nothing |
-| `src/logic/` | Pure functions, **no browser APIs**: dates and recurrence, overdue sort, block placement, budget math and safe to spend, month comparison, the text reader, the bank-message reader, bill matching, assistant replies | `model` |
-| `src/storage/` | The `StorageAdapter` interface, the IndexedDB and Artifact adapters, migrations, backup file (export/import), persistent-storage request | `model` |
-| `src/mode.ts` | Which way the app is running (`website` or `artifact`) and which parts to show (`features`) | nothing |
-| `src/integrations/` | Reminder Shortcut link; speech-to-text wrapper (browser speech API) | `model` |
-| `src/i18n/` | Arabic + English strings, number/date formatting (digits 0-9) | nothing |
-| `src/ui/` | Screens, sheets, the dock and the assistant | everything above |
+| `apps/app/src/model/` | Data types, the empty starting state, validation of drafts and imported backups | nothing |
+| `apps/app/src/logic/` | Pure functions, **no browser APIs**: dates and recurrence, overdue sort, block placement, budget math and safe to spend, month comparison, the text reader, the bank-message reader, bill matching, assistant replies | `model` |
+| `apps/app/src/storage/` | The `StorageAdapter` interface, the IndexedDB and Artifact adapters, migrations, backup file (export/import), persistent-storage request | `model` |
+| `apps/app/src/mode.ts` | Which way the app is running (`website` or `artifact`) and which parts to show (`features`) | nothing |
+| `apps/app/src/integrations/` | Reminder Shortcut link; speech-to-text wrapper (browser speech API) | `model` |
+| `apps/app/src/i18n/` | Arabic + English strings, number/date formatting (digits 0-9) | nothing |
+| `apps/app/src/ui/` | Screens, sheets, the dock and the assistant | everything above |
 
-Rules: `logic/` never imports `ui/`, `storage/` or `integrations/`. Only `src/storage/` touches IndexedDB or `window.claude`. Screens ask `features` what to show; they never check the mode themselves.
+Rules: `logic/` never imports `ui/`, `storage/` or `integrations/`. Only `apps/app/src/storage/` touches IndexedDB or `window.claude`. Screens ask `features` what to show; they never check the mode themselves.
 
 ## 3. Data model (one JSON document)
 
@@ -78,12 +78,12 @@ AppState {
 | `blocks` | which tasks sit in which block on a day, live / ended blocks, "Back from", Focus countdown (h:mm) |
 | `budget` | spent = expenses + bills paid that month; % and level (80% warn, 100% over); **safe to spend** = (budget left − unpaid bills this month) ÷ days left including today, rounded down, never below 0; **vs last month** = this month vs last month cut at the same day |
 | `bills` | month totals (total, paid, left), next bill, due-day clamping, skip |
-| `parser` | text → drafts: kind, title, date words, time (incl. «4 العصر», «بكرة 4»), amount, area/category, repeat, urgent; Arabic digits; whole words only; amounts are never times. Cases in `src/logic/parser.test.ts` (from `design/tests/parser.cases.js`) |
-| `bankMessages` | `readBankMessages(text, today)` → `{ found[], skipped{code, income, other} }`: splits several messages, finds SAR amount (ignores balance lines), shop, date (d/m/y or y/m/d, never in the future), time, type; skips codes, incoming money, non-SAR. Never keeps card digits or the text. Cases in `src/logic/bankMessages.test.ts` (from `design/tests/bank-messages.cases.js`) |
+| `parser` | text → drafts: kind, title, date words, time (incl. «4 العصر», «بكرة 4»), amount, area/category, repeat, urgent; Arabic digits; whole words only; amounts are never times. Cases in `apps/app/src/logic/parser.test.ts` (from `design/tests/parser.cases.js`) |
+| `bankMessages` | `readBankMessages(text, today)` → `{ found[], skipped{code, income, other} }`: splits several messages, finds SAR amount (ignores balance lines), shop, date (d/m/y or y/m/d, never in the future), time, type; skips codes, incoming money, non-SAR. Never keeps card digits or the text. Cases in `apps/app/src/logic/bankMessages.test.ts` (from `design/tests/bank-messages.cases.js`) |
 | `matchBill` | a pasted purchase that matches an unpaid bill (same amount; name overlap, or the only bill with that amount) |
 | `assistant` | `brief(state, today)` and `reply(text, state, today)` → message parts: keyword intents (today, overdue, bills, spending, help, thanks) or an **add card** for one clear draft. The single seam for a future AI mode |
 
-Validation of drafts and backups lives in `src/model/validate.ts`.
+Validation of drafts and backups lives in `apps/app/src/model/validate.ts`.
 
 ## 5. Storage, mode and data safety
 
@@ -121,7 +121,7 @@ interface StorageAdapter {
 
 ### 5.4 Mode
 
-`src/mode.ts` exports `mode` (`'website'` or `'artifact'`, fixed at build time: the artifact build is `vite build --mode artifact`) and `features`:
+`apps/app/src/mode.ts` exports `mode` (`'website'` or `'artifact'`, fixed at build time: the artifact build is `vite build --mode artifact`) and `features`:
 
 | `features.` | Website app | Artifact |
 |---|---|---|
@@ -130,7 +130,7 @@ interface StorageAdapter {
 | `mic` | true | false (keyboard-mic hint instead) |
 | `reminders` | true | false (Claude blocks the link) |
 
-`src/storage/index.ts` picks the adapter by `mode`. Screens get `features` and never look at `mode`.
+`apps/app/src/storage/index.ts` picks the adapter by `mode`. Screens get `features` and never look at `mode`.
 
 ### 5.5 Backup file (export / import)
 
@@ -146,7 +146,7 @@ interface StorageAdapter {
 - **Full-screen overlay**: Focus (always dark), Setup, the "Quick tour?" card, the 11 tips.
 - **Sheets** (✕ · title · ✓): details page and its repeat page, new area, add spending, bill sheet, paste messages + review, review list, Yawmie's chat, export, import, the 3 steps.
 - **First open**: `load()` returns `null` → `emptyState()` → Setup (7 steps) → "Quick tour? 11 short tips" (Show me / Skip) → tips → the empty-state cards. `settings.setupDone` and `settings.tourDone` keep them from coming back.
-- Screens in detail: [PRD.md](PRD.md) §6; look: [design/demo.html](design/demo.html). The demo's "Try as a new user" button and its made-up data are demo-only.
+- Screens in detail: [PRD.md](PRD.md) §6; look: [design/demo.html](../design/demo.html). The demo's "Try as a new user" button and its made-up data are demo-only.
 
 ### Main flows
 
@@ -165,7 +165,7 @@ interface StorageAdapter {
 
 ## 8. Design system
 
-Tokens and rules live in [CLAUDE.md](CLAUDE.md) → Design (colors, text-only shades, type ramp, corner scale, 44px tap areas). CSS variables with light and dark values; light = glass, dark = solid cards. The Home Screen icon is the day-arc mark with the two dots of ي. The app uses the iPhone's rounded system font, so no font files are bundled. Artwork (logo, icon, the character) comes from `brand/`.
+Tokens and rules live in [CLAUDE.md](../CLAUDE.md) → Design (colors, text-only shades, type ramp, corner scale, 44px tap areas). CSS variables with light and dark values; light = glass, dark = solid cards. The Home Screen icon is the day-arc mark with the two dots of ي. The app uses the iPhone's rounded system font, so no font files are bundled. Artwork (logo, icon, the character) comes from `brand/`.
 
 ## 9. iPhone integration
 
@@ -179,27 +179,26 @@ Tokens and rules live in [CLAUDE.md](CLAUDE.md) → Design (colors, text-only sh
 - Website build: strict Content-Security-Policy (`default-src 'self'`). The artifact build runs inside Claude's sandbox. User text is shown with `textContent` (or escaped by the framework), never raw HTML.
 - Typed text, pasted messages, imported backups and Shortcut text are validated; Shortcut text is URL-encoded.
 - Bank messages: card digits and message text are never stored.
-- **Licenses**: code under MIT (`LICENSE`). The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved": kept in `brand/` with `brand/NOTICE.md`, explained in `TRADEMARKS.md`. Forks use their own name, character and logo.
-- **No personal data in the repo.** No sample data folder; made-up data only in tests and the demo. Backups, exports and `.env` are git-ignored. `scripts/check-privacy.mjs` (run by the `pre-push` hook and in CI) blocks phone numbers, email addresses (except `@example.com` and GitHub/Anthropic `noreply` addresses), card-like numbers, IBANs, and the words in the git-ignored `.privacy-words` file (the owner's real shops and names). Commits use the GitHub `noreply` email.
+- **Licenses**: code under MIT (`LICENSE`). The name Yawmie / يومي, the character «يومي», the logo, the app icon and all artwork are "All rights reserved": kept in `brand/` with `brand/NOTICE.md`, explained in `docs/TRADEMARKS.md`. Forks use their own name, character and logo.
+- **No personal data in the repo.** No sample data folder; made-up data only in tests and the demo. Backups, exports and `.env` are git-ignored. `tooling/scripts/check-privacy.mjs` (run by the `pre-push` hook and in CI) blocks phone numbers, email addresses (except `@example.com` and GitHub/Anthropic `noreply` addresses), card-like numbers, IBANs, and the words in the git-ignored `.privacy-words` file (the owner's real shops and names). Commits use the GitHub `noreply` email.
 
 ### Repo layout
 
 ```
-LICENSE  TRADEMARKS.md  README.md (English)  README.ar.md (Arabic)  CONTRIBUTING.md
-CLAUDE.md  PRD.md  ARCHITECTURE.md
-brand/       NOTICE.md, logo, app icon, the character (all rights reserved)
-design/      demo.html, brandkit.html, concepts/, tests/ (made-up data only)
-docs/        superpowers/plans/, spikes.md, reminder-shortcut.md
-scripts/     check-privacy.mjs
-.githooks/   pre-push
-public/      CNAME, icons made from brand/
-src/         model/ logic/ storage/ integrations/ i18n/ ui/ mode.ts main.tsx
+.github/        the deploy workflow
+apps/app/       the Yawmie app: src/ (model/ logic/ storage/ integrations/ i18n/ ui/ mode.ts main.tsx), public/ (icons), index.html, vite.config.ts, tsconfig.json
+apps/site/      the landing page at yawmie.me (vendor/ = third-party GSAP, its own license)
+brand/          NOTICE.md, logo, app icon, the character (all rights reserved)
+design/         demo.html, brandkit.html, concepts/ (made-up data only)
+docs/           PRD.md, ARCHITECTURE.md, TRADEMARKS.md, README.ar.md, images/, spikes.md, superpowers/plans/
+tooling/        scripts/ (check-privacy.mjs, assemble-site.sh), githooks/ (pre-push)
+CLAUDE.md  LICENSE  README.md  package.json  package-lock.json
 ```
 
 ## 11. Build, test, deploy
 
 - **Stack**: Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker, website build only), `idb-keyval` (IndexedDB), `vite-plugin-singlefile` (artifact build only), Vitest.
-- `npm run build` → `dist/` (website app, built for `/app/`). `scripts/assemble-site.sh` puts the landing page (`site/`) at the root and `dist/` under `app/`, with `CNAME`. The GitHub Action (`.github/workflows/deploy.yml`, runs only on the public repo) runs the tests and the privacy check, assembles, and publishes to GitHub Pages.
+- `npm run build` → `dist/` (website app, built for `/app/`). `tooling/scripts/assemble-site.sh` puts the landing page (`apps/site/`) at the root and `dist/` under `app/`, with `CNAME`. The GitHub Action (`.github/workflows/deploy.yml`, runs only on the public repo) runs the tests and the privacy check, assembles, and publishes to GitHub Pages.
 - `npm run build:artifact` → `dist-artifact/index.html`, one file with everything inlined, published as the Claude artifact.
 - The service worker caches the website app for offline use; an "Update available" button avoids half-updated screens.
 - **Vitest** covers `logic/` (recurrence, overdue sort, block placement, budget math and safe to spend, vs last month, parser, bank messages, bill matching, assistant), `model/` (draft and backup validation, refunds), `storage/` (migrations, both adapters against fakes, chunked save), `integrations/` (Shortcut link), `i18n/` (missing keys, digits) and `scripts/` (privacy check).

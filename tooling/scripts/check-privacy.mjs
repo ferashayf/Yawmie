@@ -1,13 +1,13 @@
 // Blocks personal data before it reaches the public repo.
-// Run: node scripts/check-privacy.mjs (the pre-push hook and CI run it too).
+// Run: node tooling/scripts/check-privacy.mjs (the pre-push hook and CI run it too).
 // Private words (your real shops, names) go in .privacy-words, one per line; that file is git-ignored.
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const SKIP = new Set(['package-lock.json', 'scripts/check-privacy.test.mjs']);
+const SKIP = new Set(['package-lock.json', 'tooling/scripts/check-privacy.test.mjs']);
 // Third-party library files kept as published (their license headers name the authors).
-const SKIP_DIRS = ['site/vendor/'];
+const SKIP_DIRS = ['apps/site/vendor/'];
 const MIN_CARD_DIGITS = 13;
 
 const PATTERNS = [
