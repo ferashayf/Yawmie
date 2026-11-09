@@ -20,7 +20,7 @@ One codebase, two builds. The person picks one way to use it.
  └──────────────────────┘
 ```
 
-- **Website app**: static files on **GitHub Pages** (HTTPS) at **yawmie.me** (`CNAME` in the build + DNS at the registrar). Works offline after the first open. **Data never leaves the phone.**
+- **Website app**: static files on **GitHub Pages** (HTTPS) at **yawmie.me/app/** (Vite `base: '/app/'`; the service worker and the Home Screen icon belong to `/app/`). The landing page from `site/` sits at the root, `yawmie.me`, and links to `/app/`. `CNAME` + DNS at the registrar. Works offline after the first open. **Data never leaves the phone.**
 - **Claude artifact**: a single-file build of the same code, published as a Claude artifact with the `db`, `user` and `downloads` capabilities. Data is saved in the person's own Claude account. Needs Claude to run.
 - Neither has a server, account or analytics of ours.
 

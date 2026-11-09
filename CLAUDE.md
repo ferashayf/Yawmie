@@ -44,7 +44,7 @@ The person picks one. One **mode check** (`website` or `artifact`) tells screens
 - **Two GitHub repos:** `ferashayf/Yawmie-Private` (git remote `origin`, private backup of all work; push freely) and `ferashayf/Yawmie` (remote `public`, for users; push only with the owner's yes, Task 29).
 - **Open source, MIT** for the code; brand assets reserved (constraint 9). README in Arabic + English, CONTRIBUTING, a pre-push check for phone numbers, emails and real shop names.
 - **No sample data for users.** First open of an empty app: the 7-step setup, then a card "Quick tour? 11 short tips" (Show me / Skip), the spotlight tips, and the empty-state cards.
-- Website app at **https://yawmie.me** (GitHub Pages, custom domain). Native SwiftUI is the fallback if the web app disappoints.
+- **Addresses:** the landing page (`site/`, built in its own session) is at **https://yawmie.me**; the website app is at **https://yawmie.me/app/** (GitHub Pages, custom domain). Native SwiftUI is the fallback if the web app disappoints.
 - Claude artifact: a single-file HTML build of the same code; data through the artifact `db` capability; data-safety parts, backup card and mic hidden (see the table above).
 - Text → items: built-in rule-based reader + confirm. No AI in v1 (maybe later: opt-in, the owner's own key).
 - Voice: the browser speech API (needs Siri & Dictation on the iPhone; blocked inside the claude.ai preview). The keyboard mic is the fallback. No spoken replies.
