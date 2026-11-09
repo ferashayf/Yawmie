@@ -1,0 +1,125 @@
+<!-- Yawmie Today: concept in the "bold card + peeking mascot" style (fake data). Open with #dark-en, #light-ar or #board. -->
+<meta charset="utf-8">
+<title>Yawmie Today Look</title>
+<style>
+  /* Concept render only: on the iPhone, font-family: ui-rounded gives the same SF Pro Rounded with nothing to bundle. */
+  @font-face { font-family: YRound; src: local("SF Pro Rounded"), url("file:///System/Library/Fonts/SFNSRounded.ttf"); font-weight: 100 900; }
+  @font-face { font-family: YRoundAr; src: local("SF Arabic Rounded"), url("file:///System/Library/Fonts/SFArabicRounded.ttf"); font-weight: 100 900; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #E9E8E4; }
+  body { font-family: ui-rounded, YRound, YRoundAr, -apple-system, sans-serif; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: grid; place-items: center; padding: 70px 64px; }
+  body.board { grid-template-columns: repeat(2, 430px); gap: 56px; justify-content: center; }
+
+  .dark  { --bg: #0B0B0B; --ink: #F4F4F2; --sub: #8C8C8A; --chip: #1C1C1C; --hero: #F4F4F2; --hero-ink: #0E0E0E; --hero-sub: #6B6B69; --btn: #0E0E0E; --btn-ink: #F4F4F2;
+           --block: #8E2433; --dock: rgba(40, 40, 40, .72); --sel: rgba(255, 255, 255, .12); --teal: #2BB59D; --burg: #C04459; }
+  .light { --bg: #F4F4F2; --ink: #0E0E0E; --sub: #7A7A78; --chip: #E6E6E2; --hero: #0E0E0E; --hero-ink: #F4F4F2; --hero-sub: #A3A3A0; --btn: #F4F4F2; --btn-ink: #0E0E0E;
+           --block: #7A1F2B; --dock: rgba(255, 255, 255, .72); --sel: rgba(14, 14, 14, .07); --teal: #0F8F7A; --burg: #7A1F2B; }
+
+  .phone { width: 430px; height: 902px; border-radius: 70px; padding: 14px; position: relative;
+    background: linear-gradient(145deg, #3a3a3a, #121212 40%, #1c1c1c 70%, #3a3a3a);
+    box-shadow: 0 0 0 1.5px #5b5b5b inset, 0 40px 80px -30px rgba(30, 20, 20, .45); }
+  .screen { width: 402px; height: 874px; border-radius: 56px; overflow: hidden; position: relative; background: var(--bg); color: var(--ink); }
+  .island { position: absolute; top: 11px; left: 50%; translate: -50% 0; width: 124px; height: 36px; border-radius: 20px; background: #000; z-index: 50; }
+  .status { position: absolute; top: 0; inset-inline: 0; height: 54px; display: flex; align-items: center; justify-content: space-between; padding-inline: 46px 34px; font: 600 17px YRound, -apple-system, sans-serif; z-index: 40; }
+  [dir=rtl] .status { padding-inline: 34px 46px; }
+  .homebar { position: absolute; bottom: 8px; left: 50%; translate: -50% 0; width: 138px; height: 5px; border-radius: 3px; background: var(--ink); z-index: 50; }
+  .content { position: absolute; inset: 0; padding: 60px 22px 0; }
+
+  .bar { display: flex; justify-content: space-between; align-items: center; height: 48px; }
+  .pill { height: 44px; padding-inline: 14px; border-radius: 22px; background: var(--chip); display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; }
+  .circ { width: 44px; height: 44px; border-radius: 50%; background: var(--chip); display: grid; place-items: center; font-size: 16px; font-weight: 700; }
+  .greet { margin-top: 26px; font-size: 30px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+  .greet span { display: block; color: var(--sub); }
+
+  .heroWrap { position: relative; margin-top: 78px; }
+  .peek { position: absolute; top: -92px; inset-inline-end: 22px; width: 118px; z-index: 0; }
+  .hero { position: relative; z-index: 1; background: var(--hero); color: var(--hero-ink); border-radius: 26px; padding: 22px 22px 20px; }
+  .hero .lbl { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--hero-sub); }
+  [lang=ar] .hero .lbl { letter-spacing: 0; font-size: 14px; }
+  .hero h2 { font-size: 29px; font-weight: 700; line-height: 1.12; margin-top: 6px; letter-spacing: -.01em; max-width: 78%; }
+  .hero .meta { font-size: 15px; color: var(--hero-sub); margin-top: 8px; }
+  .go { margin-top: 18px; height: 48px; padding-inline: 20px; border-radius: 24px; background: var(--btn); color: var(--btn-ink); display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; }
+
+  .big { font-size: 54px; font-weight: 700; letter-spacing: -.02em; margin-top: 34px; line-height: 1; }
+  .band { position: relative; margin: 10px -22px 0; height: 172px; }
+  .glow { position: absolute; inset: 22px -40px 10px; filter: blur(34px); opacity: .85;
+    background: radial-gradient(40% 70% at 12% 50%, var(--teal), transparent 70%), radial-gradient(45% 80% at 55% 55%, var(--burg), transparent 70%), radial-gradient(35% 70% at 92% 45%, #B7791F, transparent 70%); }
+  .light .glow { opacity: .45; }
+  .arc { position: absolute; inset-inline: 22px; top: 6px; width: calc(100% - 44px); }
+  .stats { position: relative; display: flex; justify-content: space-between; padding: 82px 22px 0; }
+  .stat b { display: block; font-size: 50px; font-weight: 500; line-height: 1; }
+  .stat span { font-size: 15px; font-weight: 500; opacity: .85; }
+
+  .block { margin-top: 18px; background: var(--block); color: #fff; border-radius: 26px; padding: 20px 20px 90px; }
+  .bhead { display: flex; justify-content: space-between; align-items: center; }
+  .bhead h3 { font-size: 30px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .bhead small { font-size: 16px; font-weight: 600; opacity: .85; }
+  .task { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 17px; font-weight: 500; }
+  .task .c { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .55); flex: none; }
+  .task .t { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .task .tag { height: 28px; padding-inline: 11px; border-radius: 14px; background: rgba(0, 0, 0, .35); font-size: 14px; font-weight: 600; display: grid; place-items: center; flex: none; }
+
+  .dock { position: absolute; inset-inline: 14px; bottom: 26px; display: flex; gap: 8px; align-items: center; direction: ltr; z-index: 30; }
+  .bud { width: 64px; height: 64px; border-radius: 22px; overflow: hidden; background: #7A1F2B; border: 2px solid rgba(255, 255, 255, .6); flex: none; }
+  .bud img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+  .tabs { flex: 1; height: 64px; border-radius: 32px; background: var(--dock); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); display: flex; padding: 5px; }
+  [dir=rtl] .tabs { direction: rtl; }
+  .tab { flex: 1; border-radius: 27px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 11px; font-weight: 600; color: var(--sub); }
+  .tab.on { background: var(--sel); color: var(--ink); }
+  .fab { width: 64px; height: 64px; border-radius: 50%; background: #7A1F2B; color: #fff; display: grid; place-items: center; flex: none; }
+</style>
+<script>
+const P = {
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>',
+  moon: '<path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  check: '<path d="M5.5 12.5l4.2 4.2L18.5 7.8"/>',
+  flag: '<path d="M5.5 21V4"/><path d="M5.5 4h11.5l-2.4 4 2.4 4H5.5" fill="currentColor"/>',
+  today: '<path d="M3.5 17.5a8.5 8.5 0 0 1 17 0"/><path d="M2.5 20.5h19"/><circle cx="15.6" cy="11.4" r="1.9" fill="currentColor" stroke="none"/>',
+  bills: '<rect x="5" y="2.8" width="14" height="18.4" rx="3.2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  spend: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor"/>',
+  more: '<circle cx="5.5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18.5" cy="12" r="1.4" fill="currentColor"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+};
+const ic = (n, s = 22, w = 2) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+const T = {
+  en: { day: 'Sun 8 Nov', hi: 'Good evening', sub: '5 tasks left · 1 late', next: 'Next up', title: 'Call with the designer', meta: '7:30 PM · Project · in 2 hours',
+    done: 'Mark done', big: 'Your day', stats: [['5', 'Left'], ['2', 'Appointments'], ['1', 'Late']], urgent: 'Urgent', count: '3 tasks',
+    tasks: [['Review the monthly sales report', '2d late'], ['Book car service', 'Today'], ['Prepare the Q4 presentation', 'Tomorrow']], tabs: ['Today', 'Bills', 'Spending', 'More'] },
+  ar: { day: 'الأحد 8 نوفمبر', hi: 'مساء الخير', sub: 'باقي 5 مهام · 1 متأخرة', next: 'التالي', title: 'مكالمة مع المصمم', meta: '7:30 م · المشروع · بعد ساعتين',
+    done: 'تم', big: 'يومك', stats: [['5', 'باقية'], ['2', 'مواعيد'], ['1', 'متأخرة']], urgent: 'مستعجلة', count: '3 مهام',
+    tasks: [['مراجعة تقرير المبيعات الشهري', 'متأخرة يومين'], ['حجز موعد صيانة السيارة', 'اليوم'], ['إعداد العرض التقديمي', 'بكرة']], tabs: ['اليوم', 'الفواتير', 'المصروف', 'المزيد'] },
+};
+function arc(rtl) {
+  const W = 358, now = 0.75, r = 260, cx = W / 2, cy = 290, half = 165;
+  const a0 = Math.atan2(70 - cy, -half), a1 = Math.atan2(70 - cy, half), at = f => { const a = a0 + (a1 - a0) * f; const x = cx + r * Math.cos(a); return [rtl ? W - x : x, cy + r * Math.sin(a)]; };
+  const [nx, ny] = at(now), [sx, sy] = at(0), [ex, ey] = at(1);
+  return `<svg class="arc" viewBox="0 0 ${W} 80"><path d="M${sx} ${sy} A${r} ${r} 0 0 ${rtl ? 0 : 1} ${ex} ${ey}" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="${nx}" cy="${ny}" r="7" fill="var(--burg)" stroke="var(--bg)" stroke-width="2.5"/></svg>`;
+}
+function screen(lang, theme) {
+  const t = T[lang], rtl = lang === 'ar';
+  return `<div class="phone"><div class="screen ${theme}" dir="${rtl ? 'rtl' : 'ltr'}" lang="${lang}">
+    <div class="status"><span>9:41</span><span style="display:flex;gap:6px;align-items:center;direction:ltr"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" width="3" height="12" rx="1"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2.4" fill="currentColor"/></svg></span></div><div class="island"></div>
+    <div class="content">
+      <div class="bar"><div class="pill">${ic('cal', 18)}${t.day}</div><div style="display:flex;gap:10px"><div class="circ">${ic(theme === 'dark' ? 'sun' : 'moon', 19)}</div><div class="circ">${rtl ? 'EN' : 'ع'}</div></div></div>
+      <div class="greet">${t.hi}<span>${t.sub}</span></div>
+      <div class="heroWrap"><img class="peek" src="../buddy.png" alt="">
+        <div class="hero"><div class="lbl">${t.next}</div><h2>${t.title}</h2><div class="meta">${t.meta}</div><div class="go">${ic('check', 20, 2.6)}${t.done}</div></div></div>
+      <div class="big">${t.big}</div>
+      <div class="band"><div class="glow"></div>${arc(rtl)}<div class="stats">${t.stats.map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('')}</div></div>
+      <div class="block"><div class="bhead"><h3>${ic('flag', 22)}${t.urgent}</h3><small>${t.count}</small></div>
+        ${t.tasks.map(([n, g]) => `<div class="task"><span class="c"></span><span class="t">${n}</span><span class="tag">${g}</span></div>`).join('')}</div>
+    </div>
+    <div class="dock"><div class="bud"><img src="../buddy.png" alt=""></div>
+      <div class="tabs">${['today', 'bills', 'spend', 'more'].map((k, i) => `<div class="tab ${i ? '' : 'on'}">${ic(k, 24, 1.9)}<span>${t.tabs[i]}</span></div>`).join('')}</div>
+      <div class="fab">${ic('plus', 28, 2.6)}</div></div>
+    <div class="homebar"></div></div></div>`;
+}
+addEventListener('DOMContentLoaded', () => {
+  const k = location.hash.slice(1) || 'board';
+  if (k === 'board') { document.body.classList.add('board'); document.body.innerHTML = screen('en', 'dark') + screen('ar', 'light'); }
+  else { const [theme, lang] = k.split('-'); document.body.innerHTML = screen(lang, theme); }
+});
+</script>

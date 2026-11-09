@@ -1,0 +1,494 @@
+<!-- Yawmie: iOS 26 "Liquid Glass" concept screens (fake data). Rendered to PNG with headless Chrome. Open with #today, #details, #bills, #spending, #today-ar, #buddy-ar, or #board. -->
+<meta charset="utf-8">
+<title>Yawmie Glass Concepts</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #E9E8E4; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Arabic", "Geeza Pro", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; font-size: 17px; line-height: 1.3;
+    min-height: 100vh; display: grid; place-items: center; padding: 70px 64px;
+  }
+  body.board { display: grid; grid-template-columns: repeat(3, 430px); gap: 56px; justify-content: center; place-items: start; }
+
+  /* ---------- tokens per screen theme ---------- */
+  .light {
+    --ink: #0E0E0E; --sub: #5A5A5A; --sub2: #9A9A98; --sep: rgba(14,14,14,.08);
+    --glass: rgba(255,255,255,.34); --glass-hi: rgba(255,255,255,.4); --solid: rgba(255,255,255,.5);
+    --rim: rgba(255,255,255,.95); --rim2: rgba(255,255,255,.35);
+    --shadow: 0 12px 32px -10px rgba(40,24,24,.22), 0 1px 2px rgba(0,0,0,.04);
+    --sel: rgba(14,14,14,.07); --track: rgba(14,14,14,.08); --contour: rgba(14,14,14,.07);
+    --teal: #0F8F7A; --teal-soft: rgba(15,143,122,.13); --burg: #7A1F2B; --warn: #B7791F; --late: #C2412D;
+    --base1: #F4F4F2; --base2: #E8E8E4; --glow-top: rgba(15,143,122,.34); --glow-bot: rgba(122,31,43,.26); --glow-mid: rgba(15,143,122,.12); --edge1: rgba(255,255,255,1); --edge2: rgba(255,255,255,.75);
+    --dim: rgba(20,16,16,.22); --sheet: rgba(246,246,244,.86); --user: #0E0E0E; --user-ink: #F4F4F2;
+    color-scheme: light;
+  }
+  .dark {
+    --ink: #F4F4F2; --sub: #BDBDBD; --sub2: #77777A; --sep: rgba(255,255,255,.08);
+    --glass: rgba(60,60,60,.34); --glass-hi: rgba(255,255,255,.07); --solid: rgba(52,52,52,.46);
+    --rim: rgba(255,255,255,.2); --rim2: rgba(255,255,255,.05);
+    --shadow: 0 12px 32px -10px rgba(0,0,0,.7), 0 1px 2px rgba(0,0,0,.3);
+    --sel: rgba(255,255,255,.12); --track: rgba(255,255,255,.1); --contour: rgba(255,255,255,.05);
+    --teal: #2BB59D; --teal-soft: rgba(43,181,157,.16); --burg: #C04459; --warn: #D79A3A; --late: #E0614B;
+    --base1: #0E0E0E; --base2: #1E1E1E; --glow-top: rgba(43,181,157,.22); --glow-bot: rgba(192,68,89,.26); --glow-mid: rgba(43,181,157,.08); --edge1: rgba(255,255,255,.4); --edge2: rgba(255,255,255,.18);
+    --dim: rgba(0,0,0,.45); --sheet: rgba(30,30,30,.86); --user: #F4F4F2; --user-ink: #0E0E0E;
+    color-scheme: dark;
+  }
+
+  /* ---------- device ---------- */
+  .phone {
+    width: 430px; height: 902px; border-radius: 70px; padding: 14px; position: relative;
+    background: linear-gradient(145deg, #3a3a3c, #121214 40%, #1c1c1e 70%, #3a3a3c);
+    box-shadow: 0 0 0 1.5px #5b5b5e inset, 0 40px 80px -30px rgba(30,20,20,.45), 0 8px 20px -8px rgba(0,0,0,.25);
+  }
+  .screen {
+    width: 402px; height: 874px; border-radius: 56px; overflow: hidden; position: relative; color: var(--ink);
+    background:
+      radial-gradient(110% 55% at 85% -8%, var(--glow-top), transparent 62%),
+      radial-gradient(95% 45% at 8% 108%, var(--glow-bot), transparent 62%),
+      radial-gradient(60% 30% at 0% 45%, var(--glow-mid), transparent 70%),
+      linear-gradient(180deg, var(--base1), var(--base2));
+  }
+  .contour { position: absolute; inset: 0; pointer-events: none; }
+  .island { position: absolute; top: 11px; left: 50%; translate: -50% 0; width: 124px; height: 36px; border-radius: 20px; background: #000; z-index: 50; }
+  .homebar { position: absolute; bottom: 8px; left: 50%; translate: -50% 0; width: 138px; height: 5px; border-radius: 3px; background: var(--ink); opacity: .85; z-index: 50; }
+  .status { position: absolute; top: 0; inset-inline: 0; height: 54px; display: flex; align-items: center; justify-content: space-between; padding-inline: 46px 34px; z-index: 40; font-weight: 600; font-size: 17px; }
+  [dir=rtl] .status { padding-inline: 34px 46px; }
+  .status .sys { display: flex; gap: 6px; align-items: center; direction: ltr; }
+  .content { position: absolute; inset: 0; padding: 54px 20px 0; }
+
+  /* ---------- glass ---------- */
+  .glass {
+    background: linear-gradient(180deg, var(--glass-hi), transparent 55%), var(--glass);
+    -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
+    box-shadow: inset 0 0 0 .6px var(--rim2), inset 0 1px 0 var(--rim), var(--shadow);
+  }
+  .glass { position: relative; }
+  .glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.2px; pointer-events: none;
+    background: linear-gradient(140deg, var(--edge1), transparent 32%, transparent 68%, var(--edge2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .group { border-radius: 26px; overflow: hidden; }
+  .group.glass { background: linear-gradient(180deg, var(--glass-hi), transparent 40%), var(--solid); }
+
+  /* ---------- type ---------- */
+  .toolbar { height: 52px; display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+  .cbtn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 15px; font-weight: 700; color: var(--ink); }
+  .eyebrow { font-size: 13px; font-weight: 600; color: var(--sub); letter-spacing: .02em; text-transform: uppercase; }
+  [lang=ar] .eyebrow { text-transform: none; letter-spacing: 0; font-size: 14px; }
+  .ltitle { font-size: 34px; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
+  .titlerow { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+  .sec { font-size: 20px; font-weight: 700; margin: 22px 4px 10px; display: flex; justify-content: space-between; align-items: baseline; }
+  .sec small { font-size: 15px; font-weight: 500; color: var(--sub); }
+  .num { font-variant-numeric: tabular-nums; }
+  bdi { unicode-bidi: isolate; }
+
+  /* ---------- rows ---------- */
+  .row { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 10px 16px; position: relative; }
+  .row + .row::before { content: ""; position: absolute; top: 0; inset-inline-start: var(--sep-start, 52px); inset-inline-end: 0; height: .6px; background: var(--sep); }
+  .main { flex: 1; min-width: 0; }
+  .t { font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .s { font-size: 14px; color: var(--sub); margin-top: 2px; display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+  .late { color: var(--late); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .chk { width: 24px; height: 24px; border-radius: 50%; border: 1.7px solid var(--sub2); flex: none; }
+  .chev { color: var(--sub2); flex: none; }
+  [dir=rtl] .chev, [dir=rtl] .flip { transform: scaleX(-1); }
+  .tile { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 0 0 .5px rgba(0,0,0,.08); }
+  .when { width: 50px; flex: none; display: flex; flex-direction: column; }
+  .when b { font-size: 16px; font-weight: 600; }
+  .when span { font-size: 13px; color: var(--sub); }
+  .vbar { width: 4px; align-self: stretch; border-radius: 2px; flex: none; margin-block: 4px; }
+  .flag { color: var(--burg); flex: none; }
+  .trail { text-align: end; flex: none; }
+  .trail b { font-size: 16px; font-weight: 600; display: block; }
+  .trail span { font-size: 13px; color: var(--sub); }
+  .pay { font-size: 14px; font-weight: 600; color: var(--teal); background: var(--teal-soft); border-radius: 999px; padding: 5px 12px; display: inline-block; margin-top: 4px; }
+  .paid { width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: #fff; display: grid; place-items: center; flex: none; }
+  .bar { height: 6px; border-radius: 3px; background: var(--track); margin-top: 8px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 3px; }
+
+  /* ---------- pills ---------- */
+  .pills { display: flex; gap: 8px; margin-top: 16px; overflow: hidden; margin-inline: -20px; padding-inline: 20px; }
+  .pill { height: 36px; padding-inline: 14px; border-radius: 18px; display: flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 600; white-space: nowrap; flex: none; }
+  .pill.on { background: var(--teal); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 6px 16px -6px var(--teal); }
+
+  /* ---------- hero ---------- */
+  .hero { border-radius: 30px; padding: 18px 18px 16px; margin-top: 14px; }
+  .big { font-size: 46px; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .stats { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; font-size: 14px; font-weight: 600; }
+  .stat { display: flex; align-items: center; gap: 6px; }
+  .next { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--sub); margin-top: 4px; }
+  .next b { color: var(--ink); font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .arc-lbl { font-size: 11px; font-weight: 600; fill: var(--sub2); }
+
+  /* ---------- tab bar ---------- */
+  .dock { position: absolute; inset-inline: 14px; bottom: 26px; display: flex; gap: 8px; z-index: 30; }
+  .tabbar { flex: 1; height: 64px; border-radius: 32px; display: flex; padding: 5px; }
+  .tab { flex: 1; min-width: 0; border-radius: 27px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 11px; font-weight: 600; color: var(--sub); }
+  .tab.on { background: var(--sel); color: var(--ink); }
+  .fab { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+    background: radial-gradient(120% 90% at 30% 10%, rgba(255,255,255,.32), transparent 55%), var(--burg);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 0 0 .6px rgba(255,255,255,.25), 0 12px 26px -8px var(--burg); }
+  .fade-bottom { position: absolute; inset-inline: 0; bottom: 0; height: 140px; z-index: 20; pointer-events: none;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    -webkit-mask: linear-gradient(180deg, transparent, #000 55%); mask: linear-gradient(180deg, transparent, #000 55%);
+    background: linear-gradient(180deg, transparent, var(--base2)); }
+
+  /* ---------- buddy ---------- */
+  .bud { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+  .bud .face { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; }
+  .bud img, .bav img { width: 52px; image-rendering: pixelated; margin-top: 12px; }
+  .badge { position: absolute; top: -2px; inset-inline-end: -2px; min-width: 22px; height: 22px; border-radius: 11px; background: var(--burg); color: #fff;
+    font-size: 13px; font-weight: 700; display: grid; place-items: center; border: 2px solid var(--base1); z-index: 2; }
+  .bubble { padding: 10px 14px; border-radius: 20px; border-end-start-radius: 6px; font-size: 15px; font-weight: 500; max-width: 230px; margin-bottom: 26px; }
+
+  /* ---------- sheet ---------- */
+  .dimmer { position: absolute; inset: 0; background: var(--dim); z-index: 60; }
+  .under { position: absolute; inset: 0; transform: scale(.93) translateY(6px); border-radius: 40px; overflow: hidden; filter: saturate(.9); }
+  .sheet { position: absolute; inset: 64px 0 0; z-index: 70; border-radius: 40px 40px 0 0; padding: 8px 16px 0;
+    background: var(--sheet); -webkit-backdrop-filter: blur(40px) saturate(180%); backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: inset 0 1px 0 var(--rim), 0 -10px 40px -10px rgba(0,0,0,.2); }
+  .grab { width: 38px; height: 5px; border-radius: 3px; background: var(--sub2); opacity: .5; margin: 0 auto 6px; }
+  .shead { display: flex; align-items: center; justify-content: space-between; height: 52px; margin-bottom: 8px; }
+  .shead h2 { font-size: 17px; font-weight: 600; }
+  .ok { background: radial-gradient(120% 90% at 30% 10%, rgba(255,255,255,.3), transparent 55%), var(--teal); color: #fff; }
+  .sgroup { border-radius: 24px; background: var(--solid); margin-bottom: 18px; box-shadow: inset 0 0 0 .6px var(--rim2); }
+  .sheet .sgroup { margin-bottom: 13px; } .sheet .sgroup .row { min-height: 48px; }
+  .sgroup .row { min-height: 52px; }
+  .lbl { font-size: 13px; color: var(--sub); margin: 0 18px 6px; text-transform: uppercase; letter-spacing: .02em; }
+  .toggle { width: 52px; height: 32px; border-radius: 16px; background: var(--track); position: relative; flex: none; }
+  .toggle::after { content: ""; position: absolute; top: 2px; inset-inline-start: 2px; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  .toggle.on { background: var(--teal); }
+  .toggle.on::after { inset-inline-start: 22px; }
+  .val { font-size: 15px; color: var(--teal); }
+  .vgrey { font-size: 17px; color: var(--sub); display: flex; align-items: center; gap: 6px; }
+  .week { display: flex; gap: 6px; padding: 4px 14px 14px; }
+  .wd { flex: 1; height: 40px; border-radius: 14px; display: grid; place-items: center; font-size: 14px; font-weight: 600; background: var(--sel); color: var(--sub); }
+  .wd.on { background: var(--teal); color: #fff; }
+  .field-t { font-size: 20px; font-weight: 600; }
+  .link { color: var(--teal); }
+
+  /* ---------- chat ---------- */
+  .chat { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+  .msg { max-width: 82%; padding: 11px 15px; border-radius: 22px; font-size: 16px; line-height: 1.45; }
+  .msg.b { align-self: flex-start; border-end-start-radius: 7px; }
+  .msg.u { align-self: flex-end; background: var(--user); color: var(--user-ink); border-end-end-radius: 7px; }
+  .bav { width: 46px; height: 46px; border-radius: 17px; overflow: hidden; display: grid; place-items: center; flex: none; }
+  .bav img { width: 38px; margin-top: 6px; }
+  .mini { margin-top: 10px; border-radius: 16px; background: var(--sel); }
+  .mini .row { min-height: 44px; padding: 8px 12px; --sep-start: 12px; }
+  .mini .t { font-size: 15px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+  .chip { height: 38px; padding-inline: 14px; border-radius: 19px; display: flex; align-items: center; font-size: 15px; font-weight: 600; }
+  .composer { position: absolute; inset-inline: 16px; bottom: 30px; display: flex; gap: 10px; align-items: center; }
+  .composer .field { flex: 1; height: 52px; border-radius: 26px; display: flex; align-items: center; justify-content: space-between; padding-inline: 18px 8px; color: var(--sub); font-size: 16px; }
+  .send { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--sub); }
+</style>
+
+<script>
+const IC = {
+  moon: '<path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>',
+  today: '<path d="M3.5 17.5a8.5 8.5 0 0 1 17 0"/><path d="M2.5 20.5h19"/><circle cx="15.6" cy="11.4" r="1.9" fill="currentColor" stroke="none"/>',
+  bills: '<rect x="5" y="2.8" width="14" height="18.4" rx="3.2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  spend: '<path d="M4 13a8 8 0 0 1 16 0"/><path d="M12 13l4-4"/><path d="M3 18.5h18"/>',
+  more: '<circle cx="5.5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18.5" cy="12" r="1.4" fill="currentColor"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  check: '<path d="M5.5 12.5l4.2 4.2L18.5 7.8"/>',
+  x: '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  chev: '<path d="M9.5 6l6 6-6 6"/>',
+  chevL: '<path d="M14.5 6l-6 6 6 6"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  repeat: '<path d="M17 3l3 3-3 3"/><path d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H20"/><path d="M7 21l-3-3 3-3"/><path d="M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H4"/>',
+  bell: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 21a2.2 2.2 0 0 0 4 0"/>',
+  tag: '<path d="M3.5 12.5V4.5a1 1 0 0 1 1-1h8l8 8-9 9z"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/>',
+  flag: '<path d="M5.5 21V4"/><path d="M5.5 4h11.5l-2.4 4 2.4 4H5.5" fill="currentColor"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  note: '<path d="M5 6.5h14M5 11.5h14M5 16.5h9"/>',
+  days: '<rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor"/>',
+  food: '<path d="M7 3v18M4.5 3v5a2.5 2.5 0 0 0 5 0V3"/><path d="M17.5 21V3c-2.2 1.2-3.5 4.2-3.5 8.5h3.5"/>',
+  car: '<path d="M4.5 16.5v-4l2.2-5.2h10.6l2.2 5.2v4z"/><path d="M4.5 16.5v2.2M19.5 16.5v2.2M4.5 12.5h15"/><circle cx="8" cy="14.6" r=".9" fill="currentColor"/><circle cx="16" cy="14.6" r=".9" fill="currentColor"/>',
+  fun: '<path d="M12 3.5l2.3 5.3 5.7.5-4.3 3.8 1.3 5.6-5-3-5 3 1.3-5.6L4 9.3l5.7-.5z"/>',
+  gym: '<path d="M3 9.5v5M6 7v10M18 7v10M21 9.5v5M6 12h12"/>',
+  home: '<path d="M4 11l8-7 8 7v9.5H4z"/><path d="M10 20.5V14.5h4v6"/>',
+  wifi: '<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.8 16a4.8 4.8 0 0 1 6.4 0"/><circle cx="12" cy="19.3" r="1" fill="currentColor"/>',
+  phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M11 18.2h2"/>',
+  bolt: '<path d="M13 2.5L4.5 14h7l-1 7.5 8.5-11.5h-7z"/>',
+  mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
+  up: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+};
+const ic = (n, s = 22, w = 1.9, cls = '') =>
+  `<svg class="${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+
+const C = { work: '#5B7FA6', project: '#B08143', personal: '#8A6BB0', study: '#7A8B3D',
+  food: '#C2416E', car: '#D08A2E', health: '#3B6FD8', home: '#4E9583', fun: '#8A6BB0' };
+
+/* ---------- shared pieces ---------- */
+function contour(seed) {
+  let p = '';
+  for (let k = 0; k < 11; k++) {
+    const r = 70 + k * 30; let d = '';
+    for (let a = 0; a <= 360; a += 6) {
+      const t = a * Math.PI / 180;
+      const rr = r + 14 * Math.sin(3 * t + k * .5 + seed) + 9 * Math.cos(5 * t - k * .3);
+      d += (a ? 'L' : 'M') + (300 + rr * Math.cos(t)).toFixed(1) + ' ' + (210 + rr * .82 * Math.sin(t)).toFixed(1);
+    }
+    p += `<path d="${d}Z"/>`;
+  }
+  return `<svg class="contour" viewBox="0 0 402 874" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="var(--contour)" stroke-width="1">${p}</g></svg>`;
+}
+function status(rtl) {
+  return `<div class="status"><span class="num">9:41</span><span class="sys">
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+    ${ic('wifi', 18, 2.2)}
+    <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2.4" fill="currentColor"/><rect x="25" y="4.3" width="1.6" height="4.4" rx=".8" fill="currentColor" opacity=".45"/></svg>
+  </span></div>`;
+}
+function phone(inner, { theme = 'light', lang = 'en', seed = 0 } = {}) {
+  const dir = lang === 'ar' ? 'rtl' : 'ltr';
+  return `<div class="phone"><div class="screen ${theme}" dir="${dir}" lang="${lang}">
+    ${contour(seed)}${inner}${status(dir === 'rtl')}<div class="island"></div><div class="homebar"></div></div></div>`;
+}
+function toolbar(lang, theme) {
+  return `<div class="toolbar">
+    <div class="cbtn glass">${ic(theme === 'dark' ? 'sun' : 'moon', 20)}</div>
+    <div class="cbtn glass">${lang === 'ar' ? 'EN' : 'ع'}</div></div>`;
+}
+function dock(active, t) {
+  const tabs = [['today', t.tabs[0]], ['bills', t.tabs[1]], ['spend', t.tabs[2]], ['more', t.tabs[3]]];
+  return `<div class="fade-bottom"></div><div class="dock">
+    <div class="bud glass"><div class="face"><img src="../buddy.png" alt=""></div>${active === 0 ? '<span class="badge num">1</span>' : ''}</div>
+    <div class="tabbar glass">${tabs.map(([k, l], i) => `<div class="tab ${i === active ? 'on' : ''}">${ic(k, 25, 1.9)}<span>${l}</span></div>`).join('')}</div>
+    <div class="fab">${ic('plus', 28, 2.6)}</div></div>`;
+}
+
+/* ---------- day arc (the app's signature shape) ---------- */
+function dayArc(rtl, labels) {
+  const W = 330, y0 = 78, sag = 62, half = 150, r = (half * half + sag * sag) / (2 * sag);
+  const cx = W / 2, cy = y0 - sag + r;
+  const a0 = Math.atan2(y0 - cy, cx - half - cx), a1 = Math.atan2(y0 - cy, half);
+  const at = f => { const a = a0 + (a1 - a0) * f; let x = cx + r * Math.cos(a); if (rtl) x = W - x; return [x, cy + r * Math.sin(a)]; };
+  const path = `M${rtl ? W - 15 : 15} ${y0} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 ${rtl ? 0 : 1} ${rtl ? 15 : W - 15} ${y0}`;
+  const now = (9 + 41 / 60 - 6) / 18;
+  const [nx, ny] = at(now);
+  const appts = [5 / 18, 13.5 / 18].map(f => at(f)).map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="var(--base1)" stroke="var(--sub2)" stroke-width="2"/>`).join('');
+  const lbl = [0, 1 / 3, 2 / 3, 1].map((f, i) => { const [x] = at(f); const anchor = i === 0 ? 'start' : i === 3 ? 'end' : 'middle'; const ax = rtl ? (anchor === 'start' ? 'end' : anchor === 'end' ? 'start' : 'middle') : anchor; return `<text class="arc-lbl" x="${x}" y="${y0 + 18}" text-anchor="${ax}">${labels[i]}</text>`; }).join('');
+  return `<svg width="100%" viewBox="0 0 ${W} 100" style="display:block;margin-top:8px;overflow:visible">
+    <path d="${path}" fill="none" stroke="var(--track)" stroke-width="7" stroke-linecap="round"/>
+    <path d="${path}" fill="none" stroke="var(--teal)" stroke-width="7" stroke-linecap="round" pathLength="100" stroke-dasharray="${(now * 100).toFixed(1)} 200"/>
+    ${appts}
+    <circle cx="${nx}" cy="${ny}" r="12" fill="var(--burg)" opacity=".18"/>
+    <circle cx="${nx}" cy="${ny}" r="7" fill="var(--burg)" stroke="var(--base1)" stroke-width="2.5"/>
+    ${lbl}</svg>`;
+}
+
+/* ---------- strings ---------- */
+const T = {
+  en: {
+    date: 'Sunday, 8 November', title: 'Today', left: 'tasks left today', late: '1 late', appts: '2 appointments', urgentN: '2 urgent',
+    next: 'Next', nextT: 'Marketing team meeting', arc: ['6 AM', '12 PM', '6 PM', '12 AM'],
+    pills: ['All', 'Work', 'Project', 'Personal', 'Study'], up: 'Appointments', urgent: 'Urgent', tasks: 'Tasks',
+    a: [['11:00', '1h', 'Marketing team meeting', 'Meeting room', 'work', 'Work'], ['19:30', '30m', 'Call with the designer', '', 'project', 'Project']],
+    u: [['Review the monthly sales report', '2 days late', 'work', 'Work'], ['Book car service', 'Today', 'personal', 'Personal']],
+    k: [['Write the launch post', 'Today', 'project', 'Project'], ['Study chapter three', '21:00 · Daily', 'study', 'Study']],
+    tabs: ['Today', 'Bills', 'Spending', 'More'], bubble: 'Morning! One task is running late.', see: '4',
+  },
+  ar: {
+    date: 'الأحد، 8 نوفمبر', title: 'اليوم', left: 'مهام باقية اليوم', late: '1 متأخرة', appts: 'موعدين', urgentN: '2 مستعجلة',
+    next: 'التالي', nextT: 'اجتماع فريق التسويق', arc: ['6 ص', '12 م', '6 م', '12 ص'],
+    pills: ['الكل', 'العمل', 'المشروع', 'شخصي', 'دراسة'], up: 'المواعيد', urgent: 'مستعجلة', tasks: 'المهام',
+    a: [['11:00', '1 س', 'اجتماع فريق التسويق', 'قاعة الاجتماعات', 'work', 'العمل'], ['19:30', '30 د', 'مكالمة مع المصمم', '', 'project', 'المشروع']],
+    u: [['مراجعة تقرير المبيعات الشهري', 'متأخرة يومين', 'work', 'العمل'], ['حجز موعد صيانة السيارة', 'اليوم', 'personal', 'شخصي']],
+    k: [['كتابة منشور إطلاق الخدمة', 'اليوم', 'project', 'المشروع'], ['مذاكرة الفصل الثالث', '21:00 · يومياً', 'study', 'دراسة']],
+    tabs: ['اليوم', 'الفواتير', 'المصروف', 'المزيد'], bubble: 'صباح الخير! عندك مهمة متأخرة.',
+  },
+};
+
+/* ---------- screens ---------- */
+function todayBody(lang, theme, withBuddy = true) {
+  const t = T[lang], rtl = lang === 'ar';
+  const areaDots = ['', 'work', 'project', 'personal', 'study'];
+  return `<div class="content">
+    ${toolbar(lang, theme)}
+    <div class="eyebrow">${t.date}</div>
+    <div class="ltitle">${t.title}</div>
+    <div class="hero glass">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="big num">4</div><div class="s" style="margin-top:6px;font-size:15px">${t.left}</div></div>
+        <div class="stats"><span class="stat late"><i class="dot" style="background:var(--late)"></i>${t.late}</span>
+          <span class="stat" style="color:var(--burg)">${ic('flag', 14, 1.8)}${t.urgentN}</span>
+          <span class="stat" style="color:var(--sub)">${t.appts}</span></div>
+      </div>
+      ${dayArc(rtl, t.arc)}
+      <div class="next"><span>${t.next}</span><b>${t.nextT}</b><span class="num" style="color:var(--ink);font-weight:600">11:00</span></div>
+    </div>
+    <div class="pills">${t.pills.map((p, i) => `<div class="pill ${i ? 'glass' : 'on'}">${i ? `<i class="dot" style="background:${C[areaDots[i]]}"></i>` : ''}${p}</div>`).join('')}</div>
+    <div class="sec">${t.up}<small class="num">2</small></div>
+    <div class="group glass">${t.a.map(([tm, d, ti, pl, ar, an]) => `
+      <div class="row" style="--sep-start:82px"><div class="when"><b class="num">${tm}</b><span>${d}</span></div><i class="vbar" style="background:${C[ar]}"></i>
+        <div class="main"><div class="t">${ti}</div><div class="s">${pl ? pl + ' · ' : ''}${an}</div></div>${ic('chev', 16, 2.2, 'chev')}</div>`).join('')}</div>
+    <div class="sec">${t.urgent}<small class="num">2</small></div>
+    <div class="group glass">${t.u.map(([ti, s, ar, an], i) => `
+      <div class="row"><span class="chk"></span><div class="main"><div class="t">${ti}</div>
+        <div class="s"><span class="${i ? '' : 'late'}">${s}</span>·<i class="dot" style="background:${C[ar]}"></i>${an}</div></div>${ic('flag', 18, 1.8, 'flag')}</div>`).join('')}</div>
+    <div class="sec">${t.tasks}<small class="num">2</small></div>
+    <div class="group glass">${t.k.map(([ti, s, ar, an]) => `
+      <div class="row"><span class="chk"></span><div class="main"><div class="t">${ti}</div>
+        <div class="s">${s} ·<i class="dot" style="background:${C[ar]}"></i>${an}</div></div></div>`).join('')}</div>
+  </div>
+  ${dock(0, t)}`;
+}
+
+function details() {
+  const row = (tile, color, title, right, sub = '') => `<div class="row"><span class="tile" style="background:${color}">${ic(tile, 19, 2)}</span>
+    <div class="main"><div class="t">${title}</div>${sub ? `<div class="val">${sub}</div>` : ''}</div>${right}</div>`;
+  const more = v => `<span class="vgrey">${v}${ic('chev', 15, 2.2, 'chev')}</span>`;
+  return `<div class="under">${phoneless(todayBody('en', 'light', false))}</div><div class="dimmer"></div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="shead"><div class="cbtn glass">${ic('x', 20, 2.2)}</div><h2>Details</h2><div class="cbtn ok">${ic('check', 22, 2.6)}</div></div>
+    <div class="sgroup">
+      <div class="row" style="--sep-start:16px"><div class="main"><div class="field-t">Update the price list</div></div></div>
+      <div class="row" style="--sep-start:16px"><div class="main"><div class="t" style="color:var(--sub)">Check supplier prices first</div></div>${ic('note', 18, 2, 'chev')}</div>
+      <div class="row" style="--sep-start:16px"><div class="main"><div class="t link">example.com/prices</div></div>${ic('link', 18, 2, 'chev')}</div>
+    </div>
+    <div class="sgroup">
+      ${row('cal', '#C2416E', 'Date', '<span class="toggle on"></span>', 'Wednesday, 11 Nov')}
+      ${row('clock', '#3B6FD8', 'Time', '<span class="toggle on"></span>', '09:00')}
+    </div>
+    <div class="sgroup">
+      ${row('repeat', '#7A8B3D', 'Repeat', more('Every 2 weeks'))}
+      ${row('bell', '#D08A2E', 'Alert', more('1 hour before'))}
+    </div>
+    <div class="sgroup">
+      ${row('tag', '#5B7FA6', 'Area', more('<i class="dot" style="background:#5B7FA6"></i>Work'))}
+      ${row('flag', '#7A1F2B', 'Urgent', '<span class="toggle"></span>')}
+    </div>
+    <div class="lbl">Good days to work on it</div>
+    <div class="sgroup"><div class="week" style="padding-top:14px">${['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => `<div class="wd ${i === 0 || i === 2 ? 'on' : ''}">${d}</div>`).join('')}</div></div>
+    <div class="glass" style="height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;margin-top:4px">${ic('bell', 20, 2)}Add to Apple Reminders</div>
+  </div>`;
+}
+const phoneless = html => `<div class="screen light" dir="ltr" lang="en" style="border-radius:40px">${contour(0)}${html}</div>`;
+
+function ring(pct) {
+  const R = 52, L = 2 * Math.PI * R * .75;
+  return `<svg width="132" height="132" viewBox="0 0 132 132" style="flex:none">
+    <g transform="rotate(135 66 66)" fill="none" stroke-width="12" stroke-linecap="round">
+      <circle cx="66" cy="66" r="${R}" stroke="var(--track)" stroke-dasharray="${L} 999"/>
+      <circle cx="66" cy="66" r="${R}" stroke="var(--teal)" stroke-dasharray="${L * pct} 999"/></g>
+    <text x="66" y="68" text-anchor="middle" style="font-size:28px;font-weight:700;fill:var(--ink)">${Math.round(pct * 100)}%</text>
+    <text x="66" y="90" text-anchor="middle" style="font-size:13px;font-weight:600;fill:var(--sub)">paid</text></svg>`;
+}
+function bills() {
+  const up = [['gym', C.health, 'Gym membership', 'Due Tue, 10 Nov', 'in 2 days', '200.00'],
+    ['phone', C.home, 'Phone bill', 'Due Thu, 12 Nov', 'in 4 days', '150.00'],
+    ['bolt', C.home, 'Electricity', 'Due Fri, 27 Nov', '', '300.00']];
+  const paid = [['home', C.home, 'Apartment rent', 'Paid Sun, 1 Nov', '2,500.00'], ['wifi', C.home, 'Internet', 'Paid Thu, 5 Nov', '299.00']];
+  return `<div class="content">
+    ${toolbar('en', 'light')}
+    <div class="titlerow"><div><div class="eyebrow">This month</div><div class="ltitle">Bills</div></div>
+      <div class="glass" style="height:38px;border-radius:19px;display:flex;align-items:center;gap:4px;padding-inline:8px;font-size:15px;font-weight:600;margin-bottom:2px">${ic('chevL', 16, 2.4)}<span>Nov 2026</span>${ic('chev', 16, 2.4)}</div></div>
+    <div class="hero glass" style="display:flex;align-items:center;gap:16px;padding:18px">
+      ${ring(2799 / 3449)}
+      <div style="min-width:0">
+        <div class="s" style="font-size:15px;margin:0 0 4px">Left to pay</div>
+        <div style="font-size:30px;font-weight:700;letter-spacing:-.01em" class="num">SAR 650.00</div>
+        <div style="margin-top:12px;display:grid;gap:4px;font-size:14px;color:var(--sub)" class="num">
+          <div style="display:flex;justify-content:space-between;gap:12px"><span>Paid</span><b style="color:var(--teal)">SAR 2,799.00</b></div>
+          <div style="display:flex;justify-content:space-between;gap:12px"><span>Total</span><b style="color:var(--ink)">SAR 3,449.00</b></div></div>
+      </div></div>
+    <div class="sec">Coming up<small>3 bills</small></div>
+    <div class="group glass">${up.map(([i, c, n, d, w, a]) => `
+      <div class="row" style="min-height:66px;--sep-start:62px"><span class="tile" style="background:${c}">${ic(i, 19, 2)}</span>
+        <div class="main"><div class="t">${n}</div><div class="s">${d}${w ? ` · <span class="${w === 'in 2 days' ? 'warn' : ''}">${w}</span>` : ''}</div></div>
+        <div class="trail"><b class="num">SAR ${a}</b><span class="pay">Pay</span></div></div>`).join('')}</div>
+    <div class="sec">Paid<small>2 bills</small></div>
+    <div class="group glass">${paid.map(([i, c, n, d, a]) => `
+      <div class="row" style="--sep-start:62px"><span class="tile" style="background:${c}">${ic(i, 19, 2)}</span>
+        <div class="main"><div class="t">${n}</div><div class="s">${d}</div></div>
+        <div class="trail"><span class="num" style="font-size:16px;color:var(--sub)">SAR ${a}</span></div><span class="paid">${ic('check', 15, 2.8)}</span></div>`).join('')}</div>
+  </div>${dock(1, T.en)}`;
+}
+
+function gauge(pct) {
+  const cx = 160, cy = 160, r = 140, a = Math.PI * (1 - .8);
+  const p = (rr) => `${(cx + rr * Math.cos(a)).toFixed(1)} ${(cy - rr * Math.sin(a)).toFixed(1)}`;
+  const arc = `M${cx - r} ${cy} A${r} ${r} 0 0 1 ${cx + r} ${cy}`;
+  return `<svg width="100%" viewBox="0 0 320 172" style="display:block;overflow:visible">
+    <path d="${arc}" fill="none" stroke="var(--track)" stroke-width="16" stroke-linecap="round"/>
+    <path d="${arc}" fill="none" stroke="var(--teal)" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="${pct * 100} 200"/>
+    <path d="M${p(126)} L${p(154)}" stroke="var(--warn)" stroke-width="3" stroke-linecap="round"/>
+    <text x="${cx}" y="128" text-anchor="middle" style="font-size:30px;font-weight:700;fill:var(--ink);letter-spacing:-.5px">SAR 4,212.50</text>
+    <text x="${cx}" y="156" text-anchor="middle" style="font-size:15px;font-weight:500;fill:var(--sub)">of SAR 6,000.00 · 70%</text></svg>`;
+}
+function spending() {
+  const cats = [['food', C.food, 'Food', 82, 'warn', '82% · near limit', '820.00', '1,000.00'],
+    ['car', C.car, 'Car', 100, 'late', 'Over by SAR 20.00', '520.00', '500.00'],
+    ['fun', C.fun, 'Fun', 25, '', '25%', '73.50', '300.00']];
+  const log = [['food', C.food, 'Coffee', 'Food · 08:12', '18.00'], ['car', C.car, 'Fuel', 'Car · 07:40', '120.00'], ['food', C.food, 'Groceries', 'Food · Yesterday', '236.75']];
+  const col = k => k === 'warn' ? 'var(--warn)' : k === 'late' ? 'var(--late)' : 'var(--teal)';
+  return `<div class="content">
+    ${toolbar('en', 'light')}
+    <div class="eyebrow">November</div><div class="ltitle">Spending</div>
+    <div class="hero glass" style="padding:22px 18px 16px">
+      ${gauge(.702)}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;text-align:center" class="num">
+        <div><div class="s" style="justify-content:center;margin:0">Bills</div><b style="font-size:15px">2,799.00</b></div>
+        <div style="border-inline:.6px solid var(--sep)"><div class="s" style="justify-content:center;margin:0">Purchases</div><b style="font-size:15px">1,413.50</b></div>
+        <div><div class="s" style="justify-content:center;margin:0">Left</div><b style="font-size:15px;color:var(--teal)">1,787.50</b></div></div>
+    </div>
+    <div class="sec">Budgets<small>Edit</small></div>
+    <div class="group glass">${cats.map(([i, c, n, p, k, note, a, of]) => `
+      <div class="row" style="min-height:72px;--sep-start:62px"><span class="tile" style="background:${c}">${ic(i, 19, 2)}</span>
+        <div class="main"><div style="display:flex;justify-content:space-between;gap:8px"><span class="t">${n}</span><span class="num" style="font-size:16px;font-weight:600">SAR ${a}</span></div>
+          <div class="bar"><i style="width:${Math.min(p, 100)}%;background:${col(k)}"></i></div>
+          <div class="s" style="justify-content:space-between;margin-top:6px"><span class="${k}">${note}</span><span class="num">of ${of}</span></div></div></div>`).join('')}</div>
+    <div class="sec">Today<small class="num">SAR 138.00</small></div>
+    <div class="group glass">${log.map(([i, c, n, s, a]) => `
+      <div class="row" style="--sep-start:62px"><span class="tile" style="background:${c}">${ic(i, 19, 2)}</span>
+        <div class="main"><div class="t">${n}</div><div class="s">${s}</div></div><b class="num" style="font-weight:600">SAR ${a}</b></div>`).join('')}</div>
+  </div>${dock(2, T.en)}`;
+}
+
+function buddyChat() {
+  const t = T.ar;
+  return `<div class="under">${`<div class="screen light" dir="rtl" lang="ar" style="border-radius:40px">${contour(1)}${todayBody('ar', 'light', false)}</div>`}</div><div class="dimmer"></div>
+  <div class="sheet" style="display:flex;flex-direction:column">
+    <div class="grab"></div>
+    <div class="shead" style="height:64px">
+      <div style="display:flex;align-items:center;gap:12px"><div class="bav glass"><img src="../buddy.png" alt=""></div>
+        <div><h2 style="font-size:19px;font-weight:700">يومي</h2><div class="s" style="margin:0;font-size:13px">مساعدك · يشتغل بدون إنترنت</div></div></div>
+      <div class="cbtn glass">${ic('x', 20, 2.2)}</div></div>
+    <div class="chat">
+      <div class="msg b glass">صباح الخير! 👋 عندك اليوم <b class="num">4</b> مهام وموعدين. فيه مهمة وحدة متأخرة، تبيني أنقلها لبكرة؟</div>
+      <div class="msg u">كم باقي من الفواتير هالشهر؟</div>
+      <div class="msg b glass" style="max-width:90%">باقي <b class="num">3</b> فواتير مجموعها <bdi class="num" dir="ltr"><b>SAR 650.00</b></bdi>. أقربها اشتراك النادي يوم الثلاثاء.
+        <div class="mini">
+          ${[['gym', C.health, 'اشتراك النادي', 'الثلاثاء 10 نوفمبر', '200.00'], ['phone', C.home, 'فاتورة الجوال', 'الخميس 12 نوفمبر', '150.00'], ['bolt', C.home, 'الكهرباء', 'الجمعة 27 نوفمبر', '300.00']]
+            .map(([i, c, n, d, a]) => `<div class="row"><span class="tile" style="background:${c};width:28px;height:28px;border-radius:8px">${ic(i, 16, 2)}</span><div class="main"><div class="t">${n}</div><div class="s" style="font-size:12.5px">${d}</div></div><bdi class="num" dir="ltr" style="font-size:14px;font-weight:600">SAR ${a}</bdi></div>`).join('')}
+        </div></div>
+      <div class="chips"><div class="chip glass">وش المتأخر؟</div><div class="chip glass">كم صرفت اليوم؟</div><div class="chip glass">أضف مهمة</div></div>
+    </div>
+    <div class="composer"><div class="field glass">اكتب ليومي…<span style="display:flex;gap:2px"><span class="send">${ic('mic', 21)}</span></span></div>
+      <div class="cbtn" style="width:52px;height:52px;background:var(--user);color:var(--user-ink)">${ic('up', 22, 2.4)}</div></div>
+  </div>`;
+}
+
+const SCREENS = {
+  today: () => phone(todayBody('en', 'light'), { seed: 0 }),
+  details: () => phone(details(), { seed: 0 }),
+  bills: () => phone(bills(), { seed: 2 }),
+  spending: () => phone(spending(), { seed: 3 }),
+  'today-ar': () => phone(todayBody('ar', 'dark'), { theme: 'dark', lang: 'ar', seed: 4 }),
+  'buddy-ar': () => phone(buddyChat(), { lang: 'ar', seed: 5 }),
+};
+addEventListener('DOMContentLoaded', () => {
+  const k = location.hash.slice(1) || 'board';
+  if (k === 'board') { document.body.classList.add('board'); document.body.innerHTML = Object.values(SCREENS).map(f => f()).join(''); }
+  else document.body.innerHTML = SCREENS[k]();
+});
+</script>

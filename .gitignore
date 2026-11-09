@@ -1,0 +1,19 @@
+# Dependencies and builds
+node_modules/
+dist/
+dist-artifact/
+
+# Local only: test pages, video project, AI tool folders
+spikes/
+video/
+.agents/
+.claude/
+skills-lock.json
+
+# Never commit personal data
+.env*
+yawmie-backup-*.json
+.privacy-words
+
+# macOS
+.DS_Store
