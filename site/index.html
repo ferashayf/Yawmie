@@ -483,7 +483,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       chooseH: 'Pick how you use it.', chooseP: 'Same app either way. You can move from Claude to your Home Screen any time.', or: 'or', howStart: 'How to start',
       ways: [
         { icon: 'phone', h: 'On your Home Screen', for: 'For keeping your data only on your phone.', li: ['Works offline', 'Talk to Yawmie with your voice', 'Back up with one file each month'], steps: ['Open yawmie.me/app in Safari', 'Tap {share} Share', 'Choose {add} Add to Home Screen'], btn: 'Open the app', url: 'home' },
-        { icon: 'chat', h: 'Inside Claude', for: 'For Claude users who want saving done for them.', li: ['Saved to your Claude account automatically', 'Nothing to back up', 'Needs an internet connection'], steps: ['Open the setup message on GitHub', 'Paste it into Claude, signed in', 'Claude makes your own copy'], btn: 'Get the message', url: 'claude' }
+        { icon: 'chat', h: 'As a Claude artifact', for: 'Your own private Claude artifact: a small app page inside your Claude account. For Claude users who want saving done for them.', li: ['Saved to your Claude account automatically', 'Nothing to back up', 'Use it on your phone in the Claude app', 'Needs an internet connection'], steps: ['Once, on a computer: open the Claude desktop app and choose Code', 'Paste the setup message from GitHub; Claude publishes your own copy', 'Open your Yawmie artifact in Claude on any device, phone included'], btn: 'Get the setup message', url: 'claude' }
       ],
       ctaH: 'Your day starts here.',
       ctaSmall: 'Free · Open source',
@@ -532,7 +532,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       chooseH: 'اختار طريقتك.', chooseP: 'نفس التطبيق في الحالتين. وتقدر تنقل من Claude لشاشتك الرئيسية متى ما بغيت.', or: 'أو', howStart: 'كيف تبدأ',
       ways: [
         { icon: 'phone', h: 'على شاشتك الرئيسية', for: 'لو تبي بياناتك تبقى في جوالك بس.', li: ['يشتغل بدون نت', 'تكلم مع يومي بصوتك', 'نسخة احتياطية بملف واحد كل شهر'], steps: ['افتح yawmie.me/app في سفاري', 'اضغط {share} مشاركة', 'اختر {add} إضافة إلى الشاشة الرئيسية'], btn: 'افتح التطبيق', url: 'home' },
-        { icon: 'chat', h: 'داخل Claude', for: 'لو تستخدم Claude وتبي الحفظ يصير تلقائي.', li: ['ينحفظ في حسابك في Claude تلقائيًا', 'ما تحتاج نسخة احتياطية', 'يحتاج اتصال بالنت'], steps: ['افتح رسالة الإعداد في GitHub', 'الصقها في Claude وأنت مسجّل دخول', 'Claude يجهّز نسختك الخاصة'], btn: 'خذ الرسالة', url: 'claude' }
+        { icon: 'chat', h: 'كـ artifact في Claude', for: 'نسختك الخاصة كـ artifact في Claude: صفحة تطبيق صغيرة داخل حسابك. لو تستخدم Claude وتبي الحفظ يصير تلقائي.', li: ['ينحفظ في حسابك في Claude تلقائيًا', 'ما تحتاج نسخة احتياطية', 'تستخدمه من جوالك في تطبيق Claude', 'يحتاج اتصال بالنت'], steps: ['مرة وحدة من الكمبيوتر: افتح تطبيق Claude واختر Code', 'الصق رسالة الإعداد من GitHub، وClaude ينشر نسختك الخاصة', 'افتح artifact يومي حقك في Claude من أي جهاز، حتى جوالك'], btn: 'خذ رسالة الإعداد', url: 'claude' }
       ],
       ctaH: 'يومك يبدأ من هنا.',
       ctaSmall: 'مجاني · مفتوح المصدر',
@@ -685,8 +685,8 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
   }
   // shortcut: placeholder until the public repo exists; set the real releases URL here.
   var GITHUB_URL = 'https://github.com/ferashayf/Yawmie';
-  // shortcut: the Claude link is a placeholder until the artifact build is published.
-  var WAY_URLS = { home: '/app/', claude: 'https://github.com/ferashayf/Yawmie#use-it-in-claude' };
+  // The Claude way links to the README's one-message setup (Claude desktop app → Code).
+  var WAY_URLS = { home: '/app/', claude: 'https://github.com/ferashayf/Yawmie#use-it-in-claude-as-an-artifact' };
   var accOn = 0;
   var ACC_KEYS = ['today', 'plan', 'tasks', 'money', 'yawmie'];
   function renderAcc() {

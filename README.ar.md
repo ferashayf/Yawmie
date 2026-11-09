@@ -12,19 +12,26 @@
 
 | | تطبيق الموقع | نسخة Claude |
 |---|---|---|
-| الطريقة | افتح **yawmie.me** في سفاري ← مشاركة ← إضافة إلى الشاشة الرئيسية | انشر نسختك الخاصة من ملف التطبيق كـ artifact في Claude |
+| الطريقة | افتح **yawmie.me/app** في سفاري ← مشاركة ← إضافة إلى الشاشة الرئيسية | مرة وحدة من الكمبيوتر: تطبيق Claude ← Code، والصق رسالة واحدة (تحت) |
 | أين تُحفظ بياناتك | في جوالك فقط | في حسابك على Claude، خاصة بك |
 | يعمل بدون إنترنت | نعم | لا |
 
 الكل يبدأ بتطبيق فارغ. بدون حساب، بدون خادم، بدون تتبّع.
 
-## استخدامه داخل Claude
+## استخدامه داخل Claude (كـ artifact)
 
-كل شخص يسوي نسخته الخاصة، عشان تنحفظ بياناته في حسابه هو في Claude. وأنت مسجّل دخول في Claude، الصق هذه الرسالة كما هي:
+نسخة Claude هي **artifact في Claude**: صفحة تطبيق صغيرة وخاصة داخل حسابك في Claude. بياناتك تنحفظ فيه تلقائيًا، وتفتحه من تطبيق Claude من أي جهاز، حتى جوالك.
 
-> Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+كل شخص يسوي نسخته الخاصة عشان تنحفظ في حسابه هو. الإعداد **مرة وحدة من الكمبيوتر**:
 
-Claude يجيب الملف وينشر نسختك الخاصة. لو Claude ما يقدر يفتح الروابط عندك، نزّل الملف `yawmie-artifact.html` من آخر إصدار، أرفقه، والصق نفس الرسالة.
+1. افتح **تطبيق Claude على الكمبيوتر** واختر **Code**.
+2. الصق هذه الرسالة كما هي:
+
+   > Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+
+3. Claude ينشر نسختك الخاصة. افتحها في Claude من أي جهاز.
+
+المحادثة العادية في Claude ما تقدر تسوي الخطوة 3، لأن ملف التطبيق كبير على أن يكتبه Claude في رد.
 
 ## الخصوصية
 

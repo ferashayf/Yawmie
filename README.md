@@ -10,19 +10,26 @@ A personal life-management app for the iPhone, in Arabic and English: tasks, app
 
 | | Website app | Claude artifact |
 |---|---|---|
-| How | Open **yawmie.me** in Safari → Share → Add to Home Screen | Publish your own copy of the app file as a Claude artifact |
+| How | Open **yawmie.me/app** in Safari → Share → Add to Home Screen | Once, from a computer: Claude desktop app → Code, paste one message (below) |
 | Your data lives | Only on your phone | In your own Claude account, private to you |
 | Works offline | Yes | No |
 
 Everyone starts with an empty app. There's no account, no server and no tracking.
 
-## Use it in Claude
+## Use it in Claude (as an artifact)
 
-Each person makes their own copy, so it saves in their own Claude account. Signed in to Claude, paste this message:
+The Claude version is a **Claude artifact**: a small, private app page inside your own Claude account. Your data saves there automatically, and you open it from the Claude app on any device, phone included.
 
-> Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+Each person makes their own copy, so it saves in their own account. Set it up **once, from a computer**:
 
-Claude fetches the file and publishes your private copy. If Claude can't open links where you use it, download `yawmie-artifact.html` from the latest release, attach it, and paste the same message.
+1. Open the **Claude desktop app** and choose **Code**.
+2. Paste this message:
+
+   > Publish Yawmie for me from github.com/ferashayf/Yawmie (latest release, yawmie-artifact.html) as an artifact with saving (db, user, downloads) turned on.
+
+3. Claude publishes your own private copy. Open it in Claude from any device.
+
+A normal Claude chat can't do step 3: the app file is too big for Claude to write out in a chat reply.
 
 ## Privacy
 

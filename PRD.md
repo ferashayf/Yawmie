@@ -48,7 +48,7 @@ The person picks one. Same screens and logic; one **mode** setting decides which
 
 | | **Website app** | **Claude artifact** |
 |---|---|---|
-| How | https://yawmie.me in Safari → Share → **Add to Home Screen**. Opens full screen with its own icon. No Apple ID or App Store | The person publishes **their own copy** of the single-file build (from the GitHub repo) as a Claude artifact |
+| How | https://yawmie.me/app in Safari → Share → **Add to Home Screen**. Opens full screen with its own icon. No Apple ID or App Store | A **Claude artifact**: once, from a computer, the person opens the Claude desktop app → Code and pastes one message; Claude publishes **their own copy**. Then they open it in Claude on any device, phone included |
 | Data lives | **Only on the phone** | In the person's own Claude account, saved automatically, private to them |
 | Offline | Yes, after the first open | No, needs Claude |
 | Mic (6.8 Y5) | Yes (needs Siri & Dictation) | Hidden; a hint points to the keyboard mic |
@@ -247,8 +247,9 @@ The app always starts empty. First open = setup, then the tour offer, then the e
 Don't delete the Yawmie icon without exporting first.
 
 **Claude artifact**
-1. **Once:** signed in to Claude, paste the message from the README ("Publish Yawmie for me from github.com/ferashayf/Yawmie …"). Claude fetches the file and publishes your own copy.
-2. Nothing else: changes save by themselves.
+1. **Once, from a computer:** open the Claude desktop app → Code and paste the message from the README ("Publish Yawmie for me from github.com/ferashayf/Yawmie …"). Claude publishes your own copy. A normal chat can't: the file is too big to write out in a reply.
+2. Open your Yawmie artifact in Claude on any device, phone included.
+3. Nothing else: changes save by themselves.
 
 ## 7. Look and feel
 
