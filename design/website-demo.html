@@ -288,8 +288,9 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 /* ---------- privacy ---------- */
 .manifesto { margin: 0; font-size: clamp(30px, 3.9vw, 54px); line-height: 1.18; letter-spacing: -.03em; font-weight: 800; max-width: 1100px; text-wrap: pretty; }
 .manifesto .k { color: var(--burg-text); }
-.ways { margin-top: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.way { border-radius: 26px; padding: clamp(24px, 3.4vw, 40px); background: var(--glass); border: 1px solid var(--edge); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); transition: transform .7s cubic-bezier(.2, .8, .2, 1); }
+.choose { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.or { align-self: center; width: 56px; height: 56px; border-radius: 999px; display: grid; place-items: center; background: var(--burg); color: var(--on-burg); font-weight: 800; font-size: 17px; }
+.way { display: flex; flex-direction: column; border-radius: 26px; padding: clamp(24px, 3.4vw, 40px); background: var(--glass); border: 1px solid var(--edge); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); transition: transform .7s cubic-bezier(.2, .8, .2, 1); }
 .way:hover { transform: translateY(-6px); }
 .way h3 { margin: 0; font-size: 28px; letter-spacing: -.03em; display: flex; align-items: center; gap: 12px; }
 .way h3 span { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--chip); }
@@ -297,7 +298,14 @@ bdi, .num { font-variant-numeric: tabular-nums; }
 .way ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
 .way li { display: flex; gap: 10px; align-items: flex-start; font-size: 17px; }
 .way li svg { width: 20px; height: 20px; color: var(--burg-text); margin-top: 2px; }
-@media (max-width: 760px) { .ways { grid-template-columns: minmax(0, 1fr); } }
+.way .for { margin: 16px 0 0; font-size: 20px; font-weight: 700; line-height: 1.3; text-wrap: balance; }
+.way .how { margin: 24px 0 0; font-size: 13px; font-weight: 700; color: var(--dim); }
+.way ol { list-style: none; margin: 10px 0 0; padding: 16px; border-radius: 18px; background: var(--chip); display: grid; gap: 12px; }
+.way ol li { align-items: center; font-size: 15px; font-weight: 600; }
+.way ol b { width: 26px; height: 26px; border-radius: 999px; background: var(--ink); color: var(--bg1); display: grid; place-items: center; font-size: 13px; flex: none; }
+.way .gap { flex: 1; min-height: 24px; }
+.way .btn { align-self: flex-start; }
+@media (max-width: 860px) { .choose { grid-template-columns: minmax(0, 1fr); } .or { justify-self: center; } }
 
 /* ---------- call to action ---------- */
 .cta { position: relative; margin-top: 90px; border-radius: 38px; background: var(--hero); color: var(--hero-ink); padding: clamp(36px, 6vw, 88px); padding-inline-end: 34%; }
@@ -347,7 +355,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
     <nav class="nav-links">
       <a href="#features" data-t="navFeatures"></a>
       <a href="#privacy" data-t="navPrivacy"></a>
-      <a href="#start" data-t="navStart"></a>
+      <a href="#choose" data-t="navStart"></a>
     </nav>
     <button class="icon-btn" id="themeBtn" type="button"></button>
     <button class="icon-btn" id="langBtn" type="button"></button>
@@ -390,14 +398,18 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
 
   <section class="chapter wrap" id="privacy" style="padding-top: 0">
     <p class="manifesto" id="manifesto"></p>
-    <div class="ways" id="ways"></div>
+  </section>
+
+  <section class="chapter wrap" id="choose" style="padding-top: 0">
+    <h2 class="h2" data-t="chooseH"></h2>
+    <p class="lead" data-t="chooseP"></p>
+    <div class="choose" id="ways"></div>
   </section>
 
   <section class="wrap" id="start">
     <div class="cta">
       <div class="peek" aria-hidden="true"><img src="buddy-full.png" alt=""></div>
       <h2 data-t="ctaH"></h2>
-      <ol class="steps" id="steps"></ol>
       <div class="cta-row">
         <a class="btn btn-burg" href="#top"><span data-t="ctaOpen"></span><svg class="flip" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-gh" data-gh href="#" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span data-t="gh"></span></a>
@@ -461,11 +473,12 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       found: '2 found', addAll: 'Add 2', coffee: 'Coffee shop', coffeeMeta: 'Food · 8 Nov', grocery: 'Grocery store', groceryMeta: 'Home · 8 Nov',
 
       manifesto: 'No account, no tracking. Your data stays [on your iPhone], and Yawmie reminds you to back it up each month.',
+      chooseH: 'Pick how you use it.', chooseP: 'Same app either way. You can move from Claude to your Home Screen any time.', or: 'or', howStart: 'How to start',
       ways: [
-        { h: 'On your Home Screen', icon: 'phone', li: ['Works offline', 'Data only on your iPhone'] },
-        { h: 'Inside Claude', icon: 'cloud', li: ['Saved in your Claude account', 'Needs a connection'] }
+        { icon: 'phone', h: 'On your Home Screen', for: 'For keeping your data only on your phone.', li: ['Works offline', 'Talk to Yawmie with your voice', 'Back up with one file each month'], steps: ['Open yawmie.me in Safari', 'Tap Share', 'Choose Add to Home Screen'], btn: 'Open yawmie.me', url: 'home' },
+        { icon: 'chat', h: 'Inside Claude', for: 'For Claude users who want saving done for them.', li: ['Saved to your Claude account automatically', 'Nothing to back up', 'Needs an internet connection'], steps: ['Open the Yawmie link', 'Sign in to Claude', 'Start your day'], btn: 'Open in Claude', url: 'claude' }
       ],
-      ctaH: 'Your day starts here.', steps: ['Open yawmie.me in Safari', 'Tap Share', 'Choose Add to Home Screen'],
+      ctaH: 'Your day starts here.',
       ctaSmall: 'Free · Open source',
       legal: 'Code: MIT license. Name, character and logo: all rights reserved.',
       demoNote: 'Demo · made-up data',
@@ -510,11 +523,12 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       found: 'لقيت 2', addAll: 'أضف 2', coffee: 'مقهى', coffeeMeta: 'أكل · 8 نوفمبر', grocery: 'بقالة', groceryMeta: 'البيت · 8 نوفمبر',
 
       manifesto: 'بدون حساب ولا تتبع. بياناتك تبقى [في جوالك] وبس، ويومي يذكرك تنسخها كل شهر.',
+      chooseH: 'اختار طريقتك.', chooseP: 'نفس التطبيق في الحالتين. وتقدر تنقل من Claude لشاشتك الرئيسية متى ما بغيت.', or: 'أو', howStart: 'كيف تبدأ',
       ways: [
-        { h: 'على شاشتك الرئيسية', icon: 'phone', li: ['يشتغل بدون نت', 'بياناتك في جوالك بس'] },
-        { h: 'داخل Claude', icon: 'cloud', li: ['ينحفظ في حسابك في Claude', 'يحتاج اتصال'] }
+        { icon: 'phone', h: 'على شاشتك الرئيسية', for: 'لو تبي بياناتك تبقى في جوالك بس.', li: ['يشتغل بدون نت', 'تكلم مع يومي بصوتك', 'نسخة احتياطية بملف واحد كل شهر'], steps: ['افتح yawmie.me في سفاري', 'اضغط مشاركة', 'اختر إضافة إلى الشاشة الرئيسية'], btn: 'افتح yawmie.me', url: 'home' },
+        { icon: 'chat', h: 'داخل Claude', for: 'لو تستخدم Claude وتبي الحفظ يصير تلقائي.', li: ['ينحفظ في حسابك في Claude تلقائيًا', 'ما تحتاج نسخة احتياطية', 'يحتاج اتصال بالنت'], steps: ['افتح رابط يومي', 'سجّل دخولك في Claude', 'ابدأ يومك'], btn: 'افتح في Claude', url: 'claude' }
       ],
-      ctaH: 'يومك يبدأ من هنا.', steps: ['افتح yawmie.me في سفاري', 'اضغط مشاركة', 'اختر إضافة إلى الشاشة الرئيسية'],
+      ctaH: 'يومك يبدأ من هنا.',
       ctaSmall: 'مجاني · مفتوح المصدر',
       legal: 'الكود: رخصة MIT. الاسم والشخصية والشعار: كل الحقوق محفوظة.',
       demoNote: 'نسخة تجريبية · بيانات وهمية',
@@ -549,6 +563,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
     cup: SVG('<path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10.5h1.5a2.5 2.5 0 0 1 0 5H16"/>'),
     bag: SVG('<path d="M5.5 8h13l-1 12h-11zM9 8V6.5a3 3 0 0 1 6 0V8"/>'),
     phone: SVG('<rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/>'),
+    chat: SVG('<path d="M4.5 7a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v6.5a3 3 0 0 1-3 3H11l-4.5 3.5v-3.5a2 2 0 0 1-2-2z"/>'),
     cloud: SVG('<path d="M7 18.5a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.5 1.6A3.8 3.8 0 0 1 17.5 18.5z"/>')
   };
 
@@ -663,6 +678,8 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
   }
   // shortcut: placeholder until the public repo exists; set the real releases URL here.
   var GITHUB_URL = 'https://github.com/';
+  // shortcut: the Claude link is a placeholder until the artifact build is published.
+  var WAY_URLS = { home: 'https://yawmie.me', claude: '#choose' };
   var accOn = 0;
   var ACC_KEYS = ['today', 'plan', 'tasks', 'money', 'yawmie'];
   function renderAcc() {
@@ -714,10 +731,13 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       if (end) hot = false;
     });
     document.getElementById('manifesto').innerHTML = html;
-    document.getElementById('ways').innerHTML = t.ways.map(function (w) {
-      return '<div class="way"><h3><span>' + IC[w.icon] + '</span>' + esc(w.h) + '</h3><ul>' + w.li.map(function (l) { return '<li>' + IC.check + '<span>' + esc(l) + '</span></li>'; }).join('') + '</ul></div>';
-    }).join('');
-    document.getElementById('steps').innerHTML = t.steps.map(function (s, i) { return '<li><b class="num">' + (i + 1) + '</b><span>' + esc(s) + '</span></li>'; }).join('');
+    var card = function (w) {
+      return '<div class="way"><h3><span>' + IC[w.icon] + '</span>' + esc(w.h) + '</h3><p class="for">' + esc(w.for) + '</p>' +
+        '<ul>' + w.li.map(function (l) { return '<li>' + IC.check + '<span>' + esc(l) + '</span></li>'; }).join('') + '</ul>' +
+        '<div class="how">' + esc(t.howStart) + '</div><ol>' + w.steps.map(function (s, i) { return '<li><b class="num">' + (i + 1) + '</b><span>' + esc(s) + '</span></li>'; }).join('') + '</ol>' +
+        '<div class="gap"></div><a class="btn btn-burg" href="' + WAY_URLS[w.url] + '">' + esc(w.btn) + '</a></div>';
+    };
+    document.getElementById('ways').innerHTML = card(t.ways[0]) + '<div class="or">' + esc(t.or) + '</div>' + card(t.ways[1]);
   }
 
   // ---------- theme, language, background ----------
@@ -775,7 +795,7 @@ footer { padding-block: 56px calc(72px + env(safe-area-inset-bottom, 0px)); bord
       });
 
       gsap.fromTo('#manifesto .w', { opacity: 0.16 }, { opacity: 1, stagger: 0.05, ease: 'none', scrollTrigger: { trigger: '#manifesto', start: 'top 78%', end: 'bottom 45%', scrub: true } });
-      gsap.from('.way', { y: 60, duration: 1, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.ways', start: 'top 85%' } });
+      gsap.from('.way, .or', { y: 60, duration: 1, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.choose', start: 'top 85%' } });
       gsap.from('.cta .peek', { y: 140, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '.cta', start: 'top 80%' } });
     });
   }

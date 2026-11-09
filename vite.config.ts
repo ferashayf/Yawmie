@@ -36,6 +36,11 @@ const pwa = VitePWA({
 
 export default defineConfig(({ mode }) =>
   mode === 'artifact'
-    ? { plugins: [preact(), viteSingleFile()], publicDir: false, build: { outDir: 'dist-artifact' } }
+    ? {
+        plugins: [preact(), viteSingleFile()],
+        publicDir: false,
+        build: { outDir: 'dist-artifact' },
+        resolve: { alias: { 'virtual:pwa-register': '/src/ui/pwa-stub.ts' } },
+      }
     : { plugins: [preact(), contentSecurityPolicy(), pwa], test: { include: ['src/**/*.test.{ts,tsx}'] } },
 );
