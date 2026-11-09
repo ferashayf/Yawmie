@@ -123,7 +123,8 @@ Vite + TypeScript + Preact, `vite-plugin-pwa` (service worker), `idb-keyval` (In
 
 ## Commands
 
-To be filled in after scaffolding (`dev`, `build`, `build:artifact`, `test`, `check:privacy`).
+- Privacy check: `node scripts/check-privacy.mjs` (runs before every push via `.githooks/pre-push`; its tests: `node --test 'scripts/*.test.mjs'`). Private words go in the git-ignored `.privacy-words`.
+- `dev`, `build`, `build:artifact`, `test`: added with the scaffold (Task 5).
 
 ## Skills to prefer
 
